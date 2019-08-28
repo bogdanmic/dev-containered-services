@@ -1,0 +1,15 @@
+version: '3'
+services:
+  dev-consul:
+    image: "consul:1.6.0"
+    container_name: dev-consul
+    expose:
+      - 8300
+      - 8600
+      - 8500
+    ports:
+      - "8300:8300"
+      - "8600:8600"
+      - "8500:8500"
+    command: "agent -dev -ui"
+    network_mode: "host"

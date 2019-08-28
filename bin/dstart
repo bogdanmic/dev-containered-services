@@ -1,0 +1,28 @@
+#!/bin/bash
+# Starts docker-compose services
+SCRIPT_PATH="$(
+    cd "$(dirname "$0")"
+    pwd -P
+)"
+RESOURCES_PATH="$SCRIPT_PATH/../resources"
+
+# Transform the arguments in the propper format for our docker-compose command
+args=("$@")
+SERVICES=()
+for arg in "${args[@]}"; do
+    SERVICES=("${SERVICES[@]}" "dev-$arg")
+done
+
+# Transform the array into a string
+printf -v SERVICES_STR "%s\n" "${SERVICES[@]}"
+SERVICES_STR=${SERVICES_STR%?}
+
+if [[ ! $1 ]]; then
+    printf "\e[31m[ERROR]\e[39m You need to specify at least a service you want to start.\n"
+    exit 1
+fi
+
+echo -e "\e[32m[STARTING]\e[39m "$SERVICES_STR" ..."
+sleep 1
+docker-compose -f $RESOURCES_PATH/docker-compose.yml up --build $SERVICES_STR
+echo -e "\e[34m[STOPPED]\e[39m "$SERVICES_STR" ...\n"
