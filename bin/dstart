@@ -5,6 +5,16 @@ SCRIPT_PATH="$(
     pwd -P
 )"
 RESOURCES_PATH="$SCRIPT_PATH/../resources"
+CONTAINERS_HOME="$SCRIPT_PATH/../.containers_home"
+
+if ! [ -x "$(command -v docker)" ]; then
+    printf "\e[31m[ERROR]\e[39m You need to install [docker].\n"
+    exit 1
+fi
+if ! [ -x "$(command -v docker-compose)" ]; then
+    printf "\e[31m[ERROR]\e[39m You need to install [docker-compose].\n"
+    exit 1
+fi
 
 # Transform the arguments in the propper format for our docker-compose command
 args=("$@")
@@ -24,5 +34,8 @@ fi
 
 echo -e "\e[32m[STARTING]\e[39m "$SERVICES_STR" ..."
 sleep 1
-docker-compose -f $RESOURCES_PATH/docker-compose.yml up --build $SERVICES_STR
-echo -e "\e[34m[STOPPED]\e[39m "$SERVICES_STR" ...\n"
+# Specify first where the containers should store their data
+export DEV_CONTAINERS_HOME=$CONTAINERS_HOME &&
+    docker-compose -f $RESOURCES_PATH/docker-compose.yml up --build $SERVICES_STR
+
+echo -e "\e[34m[STOPPED]\e[39m "$SERVICES_STR"!\n"
