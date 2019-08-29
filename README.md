@@ -42,5 +42,10 @@ When these services are started, the docker container that gets started bears th
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have
 been configured so that they can be used in production if desired. I will try to keep these versions up to date.
 
+---
 #### If ***YOU*** feel that there is missing anything or that there can be made improvements, let's do them or let me know and I will see what I can do.
+#### ***Feel free to contribute in any way.***
+---
 
+### Available aliases
+TBC...
