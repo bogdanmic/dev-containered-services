@@ -1,3 +1,4 @@
+# Aliases to start some of our services
 alias dconsul='drun consul'
 alias dpostgres='drun postgres'
 alias dmongo='drun mongo'
@@ -5,3 +6,11 @@ alias drabbit='drun rabbitmq'
 alias dmysql='drun mysql'
 alias delastic='drun elasticsearch'
 alias dkibana='drun kibana'
+
+# Aliases to execute commands in the started services
+alias econsul='erun consul consul members'
+alias epsql='PGPASSWORD=postgres erun postgres psql -h localhost -U postgres'
+alias emongorestore='erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive'
+alias emongodump='erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db'
+alias emysqlrestore='erun mysql mysql -uroot -proot'
+alias emysqldump='erun mysql mysqldump -uroot -proot'

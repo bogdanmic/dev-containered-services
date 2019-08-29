@@ -1,0 +1,12 @@
+#!/bin/bash
+# Executes a command in a container of the mentioned service
+# The first argument is the service name and the rest are the command to execute
+# e.g. 'erun consul consul members' will execute the 'consul members' command
+# insite the consul service container
+
+SCRIPT_PATH="$(
+    cd "$(dirname "$0")"
+    pwd -P
+)"
+
+docker exec -i "dev-$@"

@@ -48,12 +48,15 @@ continueYesNo() {
 
 ask="Install the utilities script?"
 if continueYesNo "$ask"; then
+    # Add the PATH to the bin folder
     echo -e "PATH=\$PATH:$BIN_PATH" >> ~/.bashrc
     ask="Install the alias helpers?"
     if continueYesNo "$ask"; then
+        # Add the file of aliases if it exists
         if [ -f $ALIAS_HELPERS_FILE ]; then
             echo -e "if [ -f $ALIAS_HELPERS_FILE ]; then \n\t. $ALIAS_HELPERS_FILE \nfi" >> ~/.bashrc
         fi
     fi
     printf "\e[32m%s\e[39m\n" "success"
 fi
+
