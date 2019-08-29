@@ -27,6 +27,7 @@ If you wish to use this repo in your development process, all you need to do is:
 ## Available services
 If you want to start a service, all you need to do is ```drun SERVICE_NAME``` where
 **SERVICE_NAME** is one of the services described bellow:
+
 Service Name | Version | Credentials(*user:password*) | UI | Alias
 --- | --- | --- | --- | ---
 [consul](https://www.consul.io/) | 1.6.0 | - | [http://localhost:8500](http://localhost:8500) | ```$ dconsul```
