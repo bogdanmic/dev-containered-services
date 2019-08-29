@@ -39,5 +39,8 @@ Service Name | Version | Credentials(*user:password*) | UI | Alias
 [kibana](https://www.elastic.co/products/kibana) | 7.3.1 | - | [http://localhost:5601](http://localhost:5601) | ```$ dkibana```
 
 When these services are started, the docker container that gets started bears the
-name ***dev-[SERVICE_NAME]*** .
+name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have
+been configured so that they can be used in production if desired. I will try to keep these versions up to date.
+
+#### If ***YOU*** feel that there is missing anything or that there can be made improvements, let's do them or let me know and I will see what I can do.
 
