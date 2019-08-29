@@ -13,6 +13,11 @@ services:
       - "8500:8500"
     command: "agent -dev -ui"
     network_mode: "host"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
   dev-postgres:
     image: "postgres:11"
     container_name: dev-postgres
@@ -27,3 +32,26 @@ services:
     volumes:
       - "$DEV_CONTAINERS_HOME/dev-postgres:/var/lib/postgresql/data"
     command: "postgres -c log_statement=all -c log_duration=on -c log_min_duration_statement=-1"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+  dev-mongo:
+    image: "mongo:4.2.0"
+    container_name: dev-mongo
+    expose:
+    - 27017
+    ports:
+    - "27017:27017"
+    network_mode: "host"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-mongo:/data/db"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
