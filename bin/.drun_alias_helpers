@@ -1,2 +1,7 @@
 alias dconsul='drun consul'
 alias dpostgres='drun postgres'
+alias dmongo='drun mongo'
+alias drabbit='drun rabbitmq'
+alias dmysql='drun mysql'
+alias delastic='drun elasticsearch'
+alias dkibana='drun kibana'

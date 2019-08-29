@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   dev-consul:
     image: "consul:1.6.0"
@@ -13,6 +13,11 @@ services:
       - "8500:8500"
     command: "agent -dev -ui"
     network_mode: "host"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
   dev-postgres:
     image: "postgres:11"
     container_name: dev-postgres
@@ -21,9 +26,127 @@ services:
     ports:
       - "5432:5432"
     network_mode: "host"
-    environment: 
+    environment:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=postgres"
     volumes:
       - "$DEV_CONTAINERS_HOME/dev-postgres:/var/lib/postgresql/data"
     command: "postgres -c log_statement=all -c log_duration=on -c log_min_duration_statement=-1"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+  dev-mongo:
+    image: "mongo:4.2.0"
+    container_name: dev-mongo
+    expose:
+      - 27017
+    ports:
+      - "27017:27017"
+    network_mode: "host"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-mongo:/data/db"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+  dev-rabbitmq:
+    image: "rabbitmq:3.7.17-management"
+    container_name: dev-rabbitmq
+    expose:
+      - 15672
+      - 5672
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    network_mode: "host"
+    hostname: "dev-rabbitmq"
+    environment:
+      RABBITMQ_VM_MEMORY_HIGH_WATERMARK: 1024MiB
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-rabbitmq:/var/lib/rabbitmq"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+  dev-mysql:
+    image: "mysql:8.0.17"
+    container_name: dev-mysql
+    expose:
+      - 3306
+    ports:
+      - "3306:3306"
+    network_mode: "host"
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-mysql:/var/lib/mysql"
+    environment:
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_user
+      MYSQL_ROOT_PASSWORD: root
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+  dev-elasticsearch:
+    image: "elasticsearch:7.3.1"
+    container_name: dev-elasticsearch
+    expose:
+      - 9200
+      - 9300
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    network_mode: "host"
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-elasticsearch/es-data:/usr/share/elasticsearch/data"
+      - "$DEV_CONTAINERS_HOME/dev-elasticsearch/es-backups:/usr/share/elasticsearch/backups"
+    environment:
+      - cluster.name=dev-elasticsearch
+      - discovery.type=single-node
+      - path.repo=/usr/share/elasticsearch/backups
+      # Disable memory swapping
+      - bootstrap.memory_lock=true
+      # The value for these setting depends on the amount of RAM available on your server. Good rules of thumb are:
+      # Set the minimum heap size (Xms) and maximum heap size (Xmx) to be equal to each other.
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
+      - "ES_JAVA_OPTS=-Xms256m -Xmx1g"
+      - "ES_HEAP_SIZE=512m"
+    ulimits:
+      # From: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-prod-cluster-composefile
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        # From: https://www.elastic.co/guide/en/elasticsearch/reference/current/file-descriptors.html
+        soft: 65536
+        hard: 65536
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+  dev-kibana:
+    # Apparently the version of kibana is dependent on the version of elastic search
+    image: "kibana:7.3.1"
+    container_name: dev-kibana
+    expose:
+      - 5601
+    ports:
+      - "5601:5601"
+    network_mode: "host"
+    environment:
+      ELASTICSEARCH_HOSTS: http://localhost:9200/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
