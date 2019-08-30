@@ -54,37 +54,37 @@ In order for these aliases to work we need their appropriate container started.
 
 ### econsul 
 ```bash 
+# Alias equivalent
 $ erun consul consul
-```
-Executes a command inside the consul container.
-```bash
+
+### Usage example
 # Display the members of the current consul cluster.
 $ econsul members
 ```
 ### epsql 
 ```bash
+# Alias equivalent
 $ PGPASSWORD=postgres erun postgres psql -h localhost -U postgres
-```
-Allows you to run commands inside the postgres container.
-```bash
+
+### Usage example
 # To restore a database dump DB_BACKUP_FILE into a database DB_NAME
 $ cat DB_BACKUP_FILE | epsql DB_NAME
 ```
 ### emongodump 
 ```bash
+# Alias equivalent
 $ erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db
-```
-Can be used to create a database backup.
-```bash
+
+### Usage example
 # Create a dump file for a given database
 $ emongodump DB_NAME | DB_BACKUP_FILE.gz
 ```
 ### emongorestore 
 ```bash
+# Alias equivalent
 $ erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive
-```
-Can be used to restore a backup of a database.
-```bash
+
+### Usage example
 # To restore in the same database as the backup was made for
 $ cat  DB_BACKUP_FILE.gz | emongorestore
 # To restore in a different database
@@ -92,19 +92,19 @@ $ cat  DB_BACKUP_FILE.gz | emongorestore "OLD_DB_NAME.*" --nsTo "NEW_DB_NAME.*"
 ```
 ### emysqldump 
 ```bash
+# Alias equivalent
 $ erun mysql mysqldump -uroot -proot
-```
-Can be used to create a database backup
-```bash
+
+### Usage example
 # To create a database backup file
 $ emysqldump DB_NAME > DB_BACKUP_FILE.sql
 ```
 ### emysqlrestore 
 ```bash
+# Alias equivalent
 $ erun mysql mysql -uroot -proot
-```
-Can be used to restore a database backup
-```bash
+
+### Usage example
 # To restore a database backup file
 $ cat DB_BACKUP_FILE.sql | emysqlrestore DB_NAME
 ```
