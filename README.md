@@ -52,19 +52,37 @@ Here are a bunch of the aliases defined in the [.drun_alias_helpers](bin/.drun_a
 file and some of their uses.
 In order for these aliases to work we need their appropriate container started.
 
-### econsul ```erun consul consul```
+### econsul 
+```bash 
+$ erun consul consul
+```
 Executes a command inside the consul container.
 ```bash
 # Display the members of the current consul cluster.
 $ econsul members
 ```
-### epsql ```PGPASSWORD=postgres erun postgres psql -h localhost -U postgres```
+### epsql 
+```bash
+$ PGPASSWORD=postgres erun postgres psql -h localhost -U postgres
+```
 TBC
-### emongorestore ```erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive```
+### emongorestore 
+```bash
+$ erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive
+```
 TBC
-### emongodump ```erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db```
+### emongodump 
+```bash
+$ erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db
+```
 TBC
-### emysqlrestore ```erun mysql mysql -uroot -proot```
+### emysqlrestore 
+```bash
+$ erun mysql mysql -uroot -proot
+```
 TBC
-### emysqldump ```erun mysql mysqldump -uroot -proot```
+### emysqldump 
+```bash
+$ erun mysql mysqldump -uroot -proot
+```
 TBC
