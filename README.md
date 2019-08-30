@@ -47,5 +47,24 @@ been configured so that they can be used in production if desired. I will try to
 #### ***Feel free to contribute in any way.***
 ---
 
-### Available aliases
-TBC...
+## Available aliases
+Here are a bunch of the aliases defined in the [.drun_alias_helpers](bin/.drun_alias_helpers) 
+file and some of their uses.
+In order for these aliases to work we need their appropriate container started.
+
+### econsul ```erun consul consul```
+Executes a command inside the consul container.
+```bash
+# Display the members of the current consul cluster.
+$ econsul members
+```
+### epsql ```PGPASSWORD=postgres erun postgres psql -h localhost -U postgres```
+TBC
+### emongorestore ```erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive```
+TBC
+### emongodump ```erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db```
+TBC
+### emysqlrestore ```erun mysql mysql -uroot -proot```
+TBC
+### emysqldump ```erun mysql mysqldump -uroot -proot```
+TBC

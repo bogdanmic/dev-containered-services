@@ -8,7 +8,7 @@ alias delastic='drun elasticsearch'
 alias dkibana='drun kibana'
 
 # Aliases to execute commands in the started services
-alias econsul='erun consul consul members'
+alias econsul='erun consul consul'
 alias epsql='PGPASSWORD=postgres erun postgres psql -h localhost -U postgres'
 alias emongorestore='erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive'
 alias emongodump='erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db'
