@@ -65,24 +65,46 @@ $ econsul members
 ```bash
 $ PGPASSWORD=postgres erun postgres psql -h localhost -U postgres
 ```
-TBC
-### emongorestore 
+Allows you to run commands inside the postgres container.
 ```bash
-$ erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive
+# To restore a database dump DB_BACKUP_FILE into a database DB_NAME
+$ cat DB_BACKUP_FILE | epsql DB_NAME
 ```
-TBC
 ### emongodump 
 ```bash
 $ erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db
 ```
-TBC
-### emysqlrestore 
+Can be used to create a database backup.
 ```bash
-$ erun mysql mysql -uroot -proot
+# Create a dump file for a given database
+$ emongodump DB_NAME | DB_BACKUP_FILE.gz
 ```
-TBC
+### emongorestore 
+```bash
+$ erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive
+```
+Can be used to restore a backup of a database.
+```bash
+# To restore in the same database as the backup was made for
+$ cat  DB_BACKUP_FILE.gz | emongorestore
+# To restore in a different database
+$ cat  DB_BACKUP_FILE.gz | emongorestore "OLD_DB_NAME.*" --nsTo "NEW_DB_NAME.*"
+```
 ### emysqldump 
 ```bash
 $ erun mysql mysqldump -uroot -proot
 ```
-TBC
+Can be used to create a database backup
+```bash
+# To create a database backup file
+$ emysqldump DB_NAME > DB_BACKUP_FILE.sql
+```
+### emysqlrestore 
+```bash
+$ erun mysql mysql -uroot -proot
+```
+Can be used to restore a database backup
+```bash
+# To restore a database backup file
+$ cat DB_BACKUP_FILE.sql | emysqlrestore DB_NAME
+```
