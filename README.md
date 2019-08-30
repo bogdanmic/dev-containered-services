@@ -158,7 +158,7 @@ Usually this is done by copying the BACKUP_FOLDER_NAME from that server onto the
 ```bash
 # Now if you followed the recommendations above, you should be in possession of a tar/zip file
 # that contains the BACKUP_FOLDER_NAME created above Take that and extract it into
-# your elasticsearch_backups folder so we can start the restore process.
+# your dev-elasticsearch/es-backups folder so we can start the restore process.
 # If elastic search was running while you added the contents to the folder, you need to restart it.
 $ curl -X PUT \
       "http://localhost:9200/_snapshot/BACKUP_FOLDER_NAME" \
