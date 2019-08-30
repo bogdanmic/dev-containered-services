@@ -1,5 +1,9 @@
 #!/bin/bash
 # Starts docker-compose services
+# Takes one or more arguments.
+# It starts to start in docker the services received as arguments
+# e.g. 'drun consul postgres' will start 2 containers with consul and postgres
+
 SCRIPT_PATH="$(
     cd "$(dirname "$0")"
     pwd -P
