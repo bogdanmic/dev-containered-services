@@ -53,7 +53,7 @@ When these services are started, the docker container that gets started bears th
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have
 been configured so that they can be used in production if desired. I will try to keep these versions up to date.
 
-### KEYCLOAK Prerequisites
+### KEYCLOAK Prerequisites:
  - the **postgres** service running
  - a database named: **dev_keycloak**
 
