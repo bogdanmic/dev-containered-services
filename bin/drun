@@ -1,8 +1,9 @@
 #!/bin/bash
-# Starts docker-compose services
-# Takes one or more arguments.
-# It starts to start in docker the services received as arguments
-# e.g. 'drun consul postgres' will start 2 containers with consul and postgres
+# Starts docker-compose service
+# Takes one argument.
+# It starts in docker the service received as argument
+# e.g. 'drun consul' will start 2 containers with consul and traefik. All services depend on traefik
+# TODO: Make it able to take multple services as arguments.
 
 SCRIPT_PATH="$(
     cd "$(dirname "$0")"
@@ -14,8 +15,10 @@ CONTAINERS_HOME="$SCRIPT_PATH/../.containers_home"
 # Transform the arguments in the propper format for our docker-compose command
 args=("$@")
 SERVICES=()
+SERVICES_FILE=()
 for arg in "${args[@]}"; do
     SERVICES=("${SERVICES[@]}" "dev-$arg")
+    SERVICES_FILE=("${SERVICES_FILE[@]}" "$arg")
 done
 
 # Transform the array into a string
@@ -23,7 +26,7 @@ printf -v SERVICES_STR "%s\n" "${SERVICES[@]}"
 SERVICES_STR=${SERVICES_STR%?}
 
 if [[ ! $1 ]]; then
-    printf "\e[31m[ERROR]\e[39m You need to specify at least a service you want to start.\n"
+    printf "\e[31m[ERROR]\e[39m You need to specify a service you want to start.\n"
     exit 1
 fi
 
@@ -31,6 +34,6 @@ echo -e "\e[32m[STARTING]\e[39m "$SERVICES_STR" ..."
 sleep 1
 # Specify first where the containers should store their data
 export DEV_CONTAINERS_HOME=$CONTAINERS_HOME &&
-    docker-compose -f $RESOURCES_PATH/docker-compose.yml up --build $SERVICES_STR
+    docker-compose -f $RESOURCES_PATH/traefik.docker-compose.yml -f $RESOURCES_PATH/$SERVICES_FILE.docker-compose.yml up --build $SERVICES_STR
 
 echo -e "\e[34m[STOPPED]\e[39m "$SERVICES_STR"!\n"
