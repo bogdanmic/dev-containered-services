@@ -55,7 +55,7 @@ been configured so that they can be used in production if desired. I will try to
 
 ### KEYCLOAK Prerequisites
  - the **postgres** service running
- - a database created in the database service named: **dev_keycloak**
+ - a database named: **dev_keycloak**
 
 ---
 #### If ***YOU*** feel that there is missing anything or that there can be made improvements, let's do them or let me know and I will see what I can do.
