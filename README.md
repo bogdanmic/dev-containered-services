@@ -47,11 +47,13 @@ Service Name | Version | Credentials(*user:password*) | UI | Alias
 [mysql](https://www.mysql.com/) | 8.0.20 | root:root | - | ```$ dmysql```
 [elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.6.2 | - | - | ```$ delastic```
 [kibana](https://www.elastic.co/products/kibana) | 7.6.2 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
+[keycloak](https://www.keycloak.org/) | 10.0.0 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
 
 When these services are started, the docker container that gets started bears the
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have
 been configured so that they can be used in production if desired. I will try to keep these versions up to date.
 
+#### Before starting the KEYCLOAK searvice make sure that you start the postgres service and create a database on named *dev_keycloak* for KEYCLOAK to use
 ---
 #### If ***YOU*** feel that there is missing anything or that there can be made improvements, let's do them or let me know and I will see what I can do.
 #### ***Feel free to contribute in any way.***
