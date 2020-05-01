@@ -51,6 +51,9 @@ if continueYesNo "$ask"; then
     # Add the PATH to the bin folder
     echo -e "PATH=\$PATH:$BIN_PATH" >> ~/.bashrc
 
+    # Create the docker network that will be used by the services and traefik
+    docker network create dev-traefik-network
+
     # Some of the services require an allready build directory path because of user rights
     # Here we create those that we know for sure that are needed. More to come ... maybe?
     mkdir -p "$SCRIPT_PATH/.containers_home/dev-elasticsearch/es-data"
