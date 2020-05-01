@@ -39,14 +39,14 @@ If you want to start a service, all you need to do is ```drun SERVICE_NAME``` wh
 
 Service Name | Version | Credentials(*user:password*) | UI | Alias | Prerequisites
 --- | --- | --- | --- | ---
-[traefik](https://containo.us/traefik/) | 2.2.1 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik```
-[consul](https://www.consul.io/) | 1.7.2 | - | [http://consul.localhost](http://consul.localhost) | ```$ dconsul```
-[postgres](https://www.postgresql.org/) | 12.2 | postgres:postgres | - | ```$ dpostgres```
-[mongo](https://www.mongodb.com/) | 4.2.6 | root:root | - | ```$ dmongo```
-[rabbit](https://www.rabbitmq.com/) | 3.8.3 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
-[mysql](https://www.mysql.com/) | 8.0.20 | root:root | - | ```$ dmysql```
-[elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.6.2 | - | - | ```$ delastic```
-[kibana](https://www.elastic.co/products/kibana) | 7.6.2 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
+[traefik](https://containo.us/traefik/) | 2.2.1 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik``` | - 
+[consul](https://www.consul.io/) | 1.7.2 | - | [http://consul.localhost](http://consul.localhost) | ```$ dconsul``` | - 
+[postgres](https://www.postgresql.org/) | 12.2 | postgres:postgres | - | ```$ dpostgres``` | - 
+[mongo](https://www.mongodb.com/) | 4.2.6 | root:root | - | ```$ dmongo``` | - 
+[rabbit](https://www.rabbitmq.com/) | 3.8.3 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit``` | - 
+[mysql](https://www.mysql.com/) | 8.0.20 | root:root | - | ```$ dmysql``` | - 
+[elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.6.2 | - | - | ```$ delastic``` | - 
+[kibana](https://www.elastic.co/products/kibana) | 7.6.2 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana``` | - 
 [keycloak](https://www.keycloak.org/) | 10.0.0 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak``` | **dpostgres** and **dev_keycloak** database created
 
 When these services are started, the docker container that gets started bears the
