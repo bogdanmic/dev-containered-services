@@ -1,7 +1,7 @@
 version: "3"
 services:
   dev-kibana:
-    # Apparently the version of kibana is dependent on the version of elastic search
+    # Apparently the version of kibana is dependent on the version of elasticsearch
     image: "kibana:7.6.2"
     container_name: dev-kibana
     expose:
