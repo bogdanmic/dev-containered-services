@@ -21,7 +21,7 @@ services:
     networks:
       - dev-traefik-network
     depends_on:
-      - dev-traefik-network
+      - dev-traefik
     logging:
       driver: "json-file"
       options:
