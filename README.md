@@ -38,7 +38,7 @@ If you want to start a service, all you need to do is ```drun SERVICE_NAME``` wh
 **SERVICE_NAME** is one of the services described bellow:
 
 Service Name | Version | Credentials(*user:password*) | UI | Alias | Prerequisites
---- | --- | --- | --- | ---
+--- | --- | --- | --- | --- | ---
 [traefik](https://containo.us/traefik/) | 2.2.1 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik``` | - 
 [consul](https://www.consul.io/) | 1.7.2 | - | [http://consul.localhost](http://consul.localhost) | ```$ dconsul``` | - 
 [postgres](https://www.postgresql.org/) | 12.2 | postgres:postgres | - | ```$ dpostgres``` | - 
