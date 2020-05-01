@@ -1,0 +1,49 @@
+version: "3"
+services:
+  dev-elasticsearch:
+    image: "elasticsearch:7.6.2"
+    container_name: dev-elasticsearch
+    expose:
+      - 9200
+      - 9300
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=dev-traefik-network"
+      - "traefik.tcp.routers.dev-elasticsearch.entrypoints=elasticsearch"
+      - "traefik.tcp.routers.dev-elasticsearch.rule=HostSNI(`*`)"
+      - "traefik.tcp.services.dev-elasticsearch.loadbalancer.server.port=9300"
+      - "traefik.http.routers.dev-elasticsearch.entrypoints=web"
+      - "traefik.http.routers.dev-elasticsearch.rule=Host(`elasticsearch.localhost`)"
+      - "traefik.http.services.dev-elasticsearch.loadbalancer.server.port=9200"
+    environment:
+      - cluster.name=dev-elasticsearch
+      - discovery.type=single-node
+      - path.repo=/usr/share/elasticsearch/backups
+      # Disable memory swapping
+      - bootstrap.memory_lock=true
+      # The value for these setting depends on the amount of RAM available on your server. Good rules of thumb are:
+      # Set the minimum heap size (Xms) and maximum heap size (Xmx) to be equal to each other.
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
+      - "ES_JAVA_OPTS=-Xms256m -Xmx1g"
+      - "ES_HEAP_SIZE=512m"
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-elasticsearch/es-data:/usr/share/elasticsearch/data"
+      - "$DEV_CONTAINERS_HOME/dev-elasticsearch/es-backups:/usr/share/elasticsearch/backups"
+    ulimits:
+      # From: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-prod-cluster-composefile
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        # From: https://www.elastic.co/guide/en/elasticsearch/reference/current/file-descriptors.html
+        soft: 65536
+        hard: 65536
+    networks:
+      - dev-traefik-network
+    depends_on: 
+      - dev-traefik
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"

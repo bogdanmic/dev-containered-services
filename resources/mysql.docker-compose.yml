@@ -1,0 +1,28 @@
+version: "3"
+services:
+  dev-mysql:
+    image: "mysql:8.0.20"
+    container_name: dev-mysql
+    expose:
+      - 3306
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=dev-traefik-network"
+      - "traefik.tcp.routers.dev-mysql.entrypoints=mysql"
+      - "traefik.tcp.routers.dev-mysql.rule=HostSNI(`*`)"
+      - "traefik.tcp.services.dev-mysql.loadbalancer.server.port=3306"
+    environment:
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_user
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-mysql:/var/lib/mysql"
+    networks:
+      - dev-traefik-network
+    depends_on: 
+      - dev-traefik
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
