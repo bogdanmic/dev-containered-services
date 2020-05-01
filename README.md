@@ -1,6 +1,6 @@
 # dev-container-services
 This project contains a set of **"recipes"** to run a few services inside 
-docker instead of having them installed on your system. Mainly used for 
+docker instead of having them installed on your system. These are mainly used for 
 development but **docker-compose files** can be used as a starting point for
 other scenarios as well.
 
@@ -43,7 +43,7 @@ Service Name | Version | Credentials(*user:password*) | UI | Alias
 [consul](https://www.consul.io/) | 1.7.2 | - | [http://consul.localhost](http://consul.localhost) | ```$ dconsul```
 [postgres](https://www.postgresql.org/) | 12.2 | postgres:postgres | - | ```$ dpostgres```
 [mongo](https://www.mongodb.com/) | 4.2.6 | root:root | - | ```$ dmongo```
-[rabbitmq](https://www.rabbitmq.com/) | 3.8.3 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
+[rabbit](https://www.rabbitmq.com/) | 3.8.3 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
 [mysql](https://www.mysql.com/) | 8.0.20 | root:root | - | ```$ dmysql```
 [elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.6.2 | - | - | ```$ delastic```
 [kibana](https://www.elastic.co/products/kibana) | 7.6.2 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
@@ -133,14 +133,14 @@ folder:
 - ***dev-elasticsearch/es-backups*** - here we will store snapshots(backups) of our indices
 
 To view all available indices in your elastic search access 
-[http://localhost:9200/_cat/indices?pretty](http://localhost:9200/_cat/indices?pretty)
+[http://elasticsearch.localhost/_cat/indices?pretty](http://elasticsearch.localhost/_cat/indices?pretty)
 
 Now we can create snapshots for our indices:
 ```bash
 # Register a folder  where we will create some snapshots. I usually do a folder for each  index
 # BACKUP_FOLDER_NAME = the index name
 $ curl -X PUT \
-      "http://localhost:9200/_snapshot/BACKUP_FOLDER_NAME" \
+      "http://elasticsearch.localhost/_snapshot/BACKUP_FOLDER_NAME" \
       -H 'content-type: application/json' \
       -d "{
             \"type\": \"fs\",
@@ -155,7 +155,7 @@ $ curl -X PUT \
 # The backups are incremental so SNAPSHOT_NAME needs to be unique.
 # For each snapshot we can specify what indices to include but we do only one INDEX_NAME
 $ curl -X PUT \
-      "http://localhost:9200/_snapshot/BACKUP_FOLDER_NAME/SNAPSHOT_NAME?wait_for_completion=true" \
+      "http://elasticsearch.localhost/_snapshot/BACKUP_FOLDER_NAME/SNAPSHOT_NAME?wait_for_completion=true" \
       -H 'content-type: application/json' \
       -d "{
           \"indices\": \"INDEX_NAME\",
@@ -171,7 +171,7 @@ Usually this is done by copying the BACKUP_FOLDER_NAME from that server onto the
 # your dev-elasticsearch/es-backups folder so we can start the restore process.
 # If elastic search was running while you added the contents to the folder, you need to restart it.
 $ curl -X PUT \
-      "http://localhost:9200/_snapshot/BACKUP_FOLDER_NAME" \
+      "http://elasticsearch.localhost/_snapshot/BACKUP_FOLDER_NAME" \
       -H 'content-type: application/json' \
       -d "{
             \"type\": \"fs\",
@@ -181,21 +181,19 @@ $ curl -X PUT \
             }
         }"
 ```
-Now that you registered the backup repository, if you go to http://localhost:9200/_snapshot/BACKUP_FOLDER_NAME/_all you should see all available snapshots that were created. Pick the one you want to restore and:
+Now that you registered the backup repository, if you go to http://elasticsearch.localhost/_snapshot/BACKUP_FOLDER_NAME/_all you should see all available snapshots that were created. Pick the one you want to restore and:
 ```bash
 # SNAPSHOT_NAME is a name picked from the available snapshots
 $ curl -X POST \
-      http://localhost:9200/_snapshot/BACKUP_FOLDER_NAME/SNAPSHOT_NAME/_restore \
+      http://elasticsearch.localhost/_snapshot/BACKUP_FOLDER_NAME/SNAPSHOT_NAME/_restore \
       -H 'content-type: application/json'
 ```
-To monitor the restore progress you can access http://localhost:9200/_snapshot/BACKUP_FOLDER_NAME/SNAPSHOT_NAME
+To monitor the restore progress you can access http://elasticsearch.localhost/_snapshot/BACKUP_FOLDER_NAME/SNAPSHOT_NAME
 
 For more details you can read the [official documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html).
 
-After the restore is done you can access the index you restored http://localhost:9200/INDEX_NAME/_search
+After the restore is done you can access the index you restored http://elasticsearch.localhost/INDEX_NAME/_search
 
-TODO: sa adaug adresele unde te poti conecta
-TODO: si sa pun si domeniile la fiecare
 ---
 #### As stated a little bit above: ***Feel free to contribute in any way.***
 ---
