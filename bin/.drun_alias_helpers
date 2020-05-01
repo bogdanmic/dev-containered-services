@@ -7,6 +7,7 @@ alias drabbit='drun rabbit'
 alias dmysql='drun mysql'
 alias delastic='drun elasticsearch'
 alias dkibana='drun kibana'
+alias dkeycloak='drun keycloak'
 
 # Aliases to execute commands in the started services
 alias econsul='erun consul consul'
