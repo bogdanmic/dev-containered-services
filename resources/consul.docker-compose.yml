@@ -14,9 +14,10 @@ services:
     command: "agent -dev -ui -client=0.0.0.0"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.consul.rule=Host(`consul.localhost`)"
-      - "traefik.http.routers.consul.entrypoints=web"
-      - "traefik.http.services.consul.loadbalancer.server.port=8500"
+      - "traefik.docker.network=dev-traefik-network"
+      - "traefik.http.routers.dev-consul.entrypoints=web"
+      - "traefik.http.routers.dev-consul.rule=Host(`consul.localhost`)"
+      - "traefik.http.services.dev-consul.loadbalancer.server.port=8500"
     networks:
       - dev-traefik-network
     depends_on:
