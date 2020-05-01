@@ -1,0 +1,28 @@
+version: "3"
+services:
+  dev-consul:
+    image: "consul:1.7.2"
+    container_name: dev-consul
+    expose:
+      - 8300
+      - 8600
+      - 8500
+    ports:
+      - "8300:8300"
+      - "8600:8600"
+      - "8500:8500"
+    command: "agent -dev -ui -client=0.0.0.0"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.consul.rule=Host(`consul.localhost`)"
+      - "traefik.http.routers.consul.entrypoints=web"
+      - "traefik.http.services.consul.loadbalancer.server.port=8500"
+    networks:
+      - dev-traefik-network
+    depends_on:
+      - dev-traefik-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
