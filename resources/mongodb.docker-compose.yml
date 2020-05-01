@@ -1,0 +1,27 @@
+version: "3"
+services:
+  dev-mongo:
+    image: "mongo:4.2.6"
+    container_name: dev-mongo
+    expose:
+      - 27017
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=dev-traefik-network"
+      - "traefik.tcp.routers.dev-mongo.entrypoints=mongodb"
+      - "traefik.tcp.routers.dev-mongo.rule=HostSNI(`*`)"
+      - "traefik.tcp.services.dev-mongo.loadbalancer.server.port=27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-mongo:/data/db"
+    networks:
+      - dev-traefik-network
+    depends_on:
+      - dev-traefik
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
