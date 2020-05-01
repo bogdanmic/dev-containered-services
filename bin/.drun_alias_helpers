@@ -1,4 +1,5 @@
 # Aliases to start some of our services
+alias dtraefik='drun traefik'
 alias dconsul='drun consul'
 alias dpostgres='drun postgres'
 alias dmongo='drun mongo'
