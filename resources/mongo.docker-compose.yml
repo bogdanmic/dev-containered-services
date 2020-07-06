@@ -1,10 +1,12 @@
 version: "3"
 services:
   dev-mongo:
-    image: "mongo:4.2.6"
+    image: "mongo:4.2.8"
     container_name: dev-mongo
     expose:
       - 27017
+    ports:
+      - 27017:27017
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=dev-traefik-network"

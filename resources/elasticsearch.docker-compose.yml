@@ -1,11 +1,14 @@
 version: "3"
 services:
   dev-elasticsearch:
-    image: "elasticsearch:7.6.2"
+    image: "elasticsearch:7.8.0"
     container_name: dev-elasticsearch
     expose:
       - 9200
       - 9300
+    ports:
+      - 9200:9200
+      - 9300:9300
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=dev-traefik-network"

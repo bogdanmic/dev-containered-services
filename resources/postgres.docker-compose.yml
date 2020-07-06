@@ -1,10 +1,12 @@
 version: "3"
 services:
   dev-postgres:
-    image: "postgres:12.2"
+    image: "postgres:12.3"
     container_name: dev-postgres
     expose:
       - 5432
+    ports:
+      - 5432:5432
     command: "postgres -c log_statement=all -c log_duration=on -c log_min_duration_statement=-1"
     labels:
       - "traefik.enable=true"

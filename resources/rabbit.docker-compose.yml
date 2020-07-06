@@ -1,11 +1,14 @@
 version: "3"
 services:
   dev-rabbit:
-    image: "rabbitmq:3.8.3-management"
+    image: "rabbitmq:3.8.5-management"
     container_name: dev-rabbit
     expose:
       - 15672
       - 5672
+    ports:
+      - 15672:15672
+      - 5672:5672
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=dev-traefik-network"
