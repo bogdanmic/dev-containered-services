@@ -4,6 +4,10 @@ docker instead of having them installed on your system. These are mainly used fo
 development but **docker-compose files** can be used as a starting point for
 other scenarios as well.
 
+#### Note
+This repository was tested on Linux more specifically on Ubuntu based distributions like: Ubuntu, Linux Mint and other 
+Ubuntu official flavours. 
+
 ### Prerequisites
 In order to run this project you need the following:
  - [docker](https://www.docker.com/community-edition#/download)
@@ -18,10 +22,9 @@ These services can be interacted with using a few CLI utilities built here:
  - **erun** - allows us to execute commands in a started service e.g. ```$ erun consul consul members``` 
  will execute the *consul members* command inside the started *consul* docker container 
 
- **Why I chose to use a reverse proxy like traefik?**
- 
- Well that is easy to answer. I don't like remembering all the ports for the web
- UIs and also it makes thinks easier when interconnecting services.
+**Why I chose to use a reverse proxy like traefik?**
+
+Well that is easy to answer. I don't like remembering all the ports for the web UIs.
 
 ## Installation
 If you wish to use this repository in your development process, all you need to do is:
