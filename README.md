@@ -5,22 +5,28 @@ development but **docker-compose files** can be used as a starting point for
 other scenarios as well.
 
 #### Note
-This repository was tested on Linux more specifically on Ubuntu based distributions like: Ubuntu, Linux Mint and other 
-Ubuntu official flavours. 
+This repository was tested on **Linux** more specifically on Ubuntu based 
+distributions like: **Ubuntu**, **Linux Mint** and other Ubuntu official 
+flavours. Using this in WSL for Windows with a Ubuntu distribution might work.
 
 ### Prerequisites
 In order to run this project you need the following:
  - [docker](https://www.docker.com/community-edition#/download)
  - [docker-compose](https://docs.docker.com/compose/install/)
+ - [Linux Mint](https://www.linuxmint.com/) or compatible Linux distribution. 
+ It might work with [Ubuntu in WSL2](https://ubuntu.com/blog/ubuntu-on-wsl-2-is-generally-available) 
+ as well.
 
 ## Intro
-This repository offers a handful of services described in their corresponding [**<SERVICE_NAME>.docker-compose.yml**](resources/) file.
+This repository offers a handful of services described in their corresponding 
+[**<SERVICE_NAME>.docker-compose.yml**](resources/) file.
 These services can be interacted with using a few CLI utilities built here:
  - **drun** - starts a service inside a docker container e.g. ```$ drun consul```
  will start the consul service. Bear in mind that these services use **traefik**
  so if traefik is not started then it will be. 
- - **erun** - allows us to execute commands in a started service e.g. ```$ erun consul consul members``` 
- will execute the *consul members* command inside the started *consul* docker container 
+ - **erun** - allows us to execute commands in a started service e.g. 
+ ```$ erun consul consul members``` will execute the *consul members* command 
+ inside the started *consul* docker container 
 
 **Why I chose to use a reverse proxy like traefik?**
 
@@ -54,7 +60,8 @@ Service Name | Version | Credentials(*user:password*) | UI | Alias
 
 When these services are started, the docker container that gets started bears the
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have
-been configured so that they can be used in production if desired. I will try to keep these versions up to date.
+been configured so that they can be used in production if desired. I will try 
+to keep these versions up to date.
 
 ### KEYCLOAK Prerequisites:
  - the **postgres** service running
@@ -171,8 +178,9 @@ $ curl -X PUT \
           \"include_global_state\": false
         }"
 ```
-Bellow we will handle the restoring of a snapshot that we got from another elastic search server.
-Usually this is done by copying the BACKUP_FOLDER_NAME from that server onto the new one and following the next steps.
+Bellow we will handle the restoring of a snapshot that we got from another elastic 
+search server. Usually this is done by copying the BACKUP_FOLDER_NAME from that 
+server onto the new one and following the next steps.
 ```bash
 # Now if you followed the recommendations above, you should be in possession of a tar/zip file
 # that contains the BACKUP_FOLDER_NAME created above Take that and extract it into
