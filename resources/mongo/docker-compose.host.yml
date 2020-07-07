@@ -1,0 +1,4 @@
+version: "3"
+services:
+  dev-mongo:
+    network_mode: "host"

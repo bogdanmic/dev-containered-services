@@ -1,17 +1,17 @@
 version: "3"
 services:
   dev-rabbit:
-    image: "rabbitmq:3.8.3-management"
+    image: "rabbitmq:3.8.5-management"
     container_name: dev-rabbit
     expose:
       - 15672
       - 5672
+    ports:
+      - 15672:15672
+      - 5672:5672
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=dev-traefik-network"
-      - "traefik.tcp.routers.dev-rabbit.entrypoints=rabbitmq"
-      - "traefik.tcp.routers.dev-rabbit.rule=HostSNI(`*`)"
-      - "traefik.tcp.services.dev-rabbit.loadbalancer.server.port=5672"
       - "traefik.http.routers.dev-rabbit.entrypoints=web"
       - "traefik.http.routers.dev-rabbit.rule=Host(`rabbit.localhost`)"
       - "traefik.http.services.dev-rabbit.loadbalancer.server.port=15672"
@@ -22,10 +22,6 @@ services:
       RABBITMQ_DEFAULT_PASS: "guest"
     volumes:
       - "$DEV_CONTAINERS_HOME/dev-rabbit:/var/lib/rabbitmq"
-    networks:
-      - dev-traefik-network
-    depends_on:
-      - dev-traefik
     logging:
       driver: "json-file"
       options:
