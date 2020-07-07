@@ -1,0 +1,15 @@
+version: "3"
+services:
+  dev-keycloak:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=dev-traefik-network"
+      - "traefik.http.routers.dev-keycloak.entrypoints=web"
+      - "traefik.http.routers.dev-keycloak.rule=Host(`keycloak.localhost`)"
+      - "traefik.http.services.dev-keycloak.loadbalancer.server.port=8080"
+    environment:
+      DB_ADDR: dev-postgres
+    networks:
+      - dev-traefik-network
+    depends_on: 
+      - dev-traefik

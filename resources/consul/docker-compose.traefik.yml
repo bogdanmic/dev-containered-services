@@ -1,17 +1,6 @@
 version: "3"
 services:
   dev-consul:
-    image: "consul:1.7.2"
-    container_name: dev-consul
-    expose:
-      - 8300
-      - 8600
-      - 8500
-    ports:
-      - "8300:8300"
-      - "8600:8600"
-      - "8500:8500"
-    command: "agent -dev -ui -client=0.0.0.0"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=dev-traefik-network"
@@ -22,8 +11,3 @@ services:
       - dev-traefik-network
     depends_on:
       - dev-traefik
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "3"
