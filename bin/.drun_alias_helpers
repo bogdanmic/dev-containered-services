@@ -9,6 +9,7 @@ alias delastic='drun elasticsearch'
 alias dkibana='drun kibana'
 alias dkeycloak='drun keycloak'
 
+#TODO: How do we handle multiple versions for a service?
 
 # Aliases to execute commands in the started services
 alias econsul='erun consul consul'
