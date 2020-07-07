@@ -13,17 +13,18 @@ flavours. Using this in WSL for Windows with a Ubuntu distribution might work.
 In order to run this project you need the following:
  - [docker](https://www.docker.com/community-edition#/download)
  - [docker-compose](https://docs.docker.com/compose/install/)
- - [Linux Mint](https://www.linuxmint.com/) or compatible Linux distribution. 
+ - [Linux Mint](https://www.linuxmint.com/) or compatible Ubuntu based distribution. 
  It might work with [Ubuntu in WSL2](https://ubuntu.com/blog/ubuntu-on-wsl-2-is-generally-available) 
  as well.
 
 ## Intro
 This repository offers a handful of services described in their corresponding 
-[**<SERVICE_NAME>.docker-compose.yml**](resources/) file.
+[**<SERVICE_NAME>/docker-compose.yml**](resources/) file.
 These services can be interacted with using a few CLI utilities built here:
  - **drun** - starts a service inside a docker container e.g. ```$ drun consul```
  will start the consul service. Bear in mind that these services use **traefik**
- so if traefik is not started then it will be. 
+ so if traefik is not started then it will be. If you want to start the service 
+ using the host network, use the ```-h|--host``` flag
  - **erun** - allows us to execute commands in a started service e.g. 
  ```$ erun consul consul members``` will execute the *consul members* command 
  inside the started *consul* docker container 
@@ -49,7 +50,7 @@ If you want to start a service, all you need to do is ```drun SERVICE_NAME``` wh
 Service Name | Version | Credentials(*user:password*) | UI | Alias
 --- | --- | --- | --- | ---
 [traefik](https://containo.us/traefik/) | 2.2.1 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik```
-[consul](https://www.consul.io/) | 1.7.2 | - | [http://consul.localhost](http://consul.localhost) | ```$ dconsul```
+[consul](https://www.consul.io/) | 1.7.2 | - | [http://localhost:8500](http://localhost:8500) | ```$ dconsul```
 [postgres](https://www.postgresql.org/) | 12.2 | postgres:postgres | - | ```$ dpostgres```
 [mongo](https://www.mongodb.com/) | 4.2.6 | root:root | - | ```$ dmongo```
 [rabbit](https://www.rabbitmq.com/) | 3.8.3 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
@@ -62,6 +63,12 @@ When these services are started, the docker container that gets started bears th
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have
 been configured so that they can be used in production if desired. I will try 
 to keep these versions up to date.
+
+#### Note
+The ```$ dconsul``` is equivalent to ```$ drun consul --host``` basically it starts
+consul using the host network. This should work for most development needs but if
+you wish to have consul running in the docker **dev-traefik-network** for some
+reason, start it using the default command ```$ drun consul```
 
 ### KEYCLOAK Prerequisites:
  - the **postgres** service running
