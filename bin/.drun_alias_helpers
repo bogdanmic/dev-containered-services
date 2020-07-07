@@ -1,6 +1,6 @@
 # Aliases to start some of our services
 alias dtraefik='drun traefik'
-alias dconsul='drun consul'
+alias dconsul='drun consul --host'
 alias dpostgres='drun postgres'
 alias dmongo='drun mongo'
 alias drabbit='drun rabbit'
@@ -8,6 +8,7 @@ alias dmysql='drun mysql'
 alias delastic='drun elasticsearch'
 alias dkibana='drun kibana'
 alias dkeycloak='drun keycloak'
+
 
 # Aliases to execute commands in the started services
 alias econsul='erun consul consul'
