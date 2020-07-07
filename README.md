@@ -13,7 +13,7 @@ flavours. Using this in WSL for Windows with a Ubuntu distribution might work.
 In order to run this project you need the following:
  - [docker](https://www.docker.com/community-edition#/download)
  - [docker-compose](https://docs.docker.com/compose/install/)
- - [Linux Mint](https://www.linuxmint.com/) or compatible Ubuntu based distribution. 
+ - [Linux Mint](https://www.linuxmint.com/) or a compatible Ubuntu based distribution. 
  It might work with [Ubuntu in WSL2](https://ubuntu.com/blog/ubuntu-on-wsl-2-is-generally-available) 
  as well.
 
