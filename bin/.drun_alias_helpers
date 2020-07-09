@@ -8,6 +8,8 @@ alias dmysql='drun mysql'
 alias delastic='drun elasticsearch'
 alias dkibana='drun kibana'
 alias dkeycloak='drun keycloak'
+alias dzipkin='drun openzipkin'
+alias djaeger='drun jaeger'
 
 #TODO: How do we handle multiple versions for a service?
 

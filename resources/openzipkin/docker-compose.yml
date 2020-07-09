@@ -1,0 +1,31 @@
+version: "3"
+services:
+  dev-openzipkin:
+    image: openzipkin/zipkin:2.21.4
+    container_name: dev-openzipkin
+    expose:
+      - 9411
+    ports:
+      - 9411:9411
+    # We will use the inmemory approach for local development but if we really want the storage we can use elasticsearch
+    # environment:
+    #   - "STORAGE_TYPE=elasticsearch"
+    #   - "ES_HOSTS=http://dev-elasticsearch:9200"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+# # If we use storage then we will need to run also the openzipkin/zipkin-dependencies container on a scheduler to build the dependency graph data
+#   dev-openzipkin-dependencies:
+#     image: openzipkin/zipkin-dependencies:2.4.1
+#     container_name: dev-openzipkin-dependencies
+#     environment:
+#       STORAGE_TYPE: elasticsearch
+#       ES_HOSTS: http://dev-elasticsearch:9200
+#       JAVA_OPTS: -Xmx512m -Xms128m #This might not work as expected. Then again, maybe it does. Kind of hard to determine
+#     logging:
+#       driver: "json-file"
+#       options:
+#         max-size: "100m"
+#         max-file: "5"

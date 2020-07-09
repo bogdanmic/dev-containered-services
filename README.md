@@ -58,6 +58,8 @@ Service Name | Version | Credentials(*user:password*) | UI | Alias
 [elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.8.0 | - | - | ```$ delastic```
 [kibana](https://www.elastic.co/products/kibana) | 7.8.0 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
 [keycloak](https://www.keycloak.org/) | 10.0.2 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
+[openzipkin](https://zipkin.io/) | 2.21.4 | - | [http://zipkin.localhost](http://zipkin.localhost) | ```$ dzipkin```
+[jaeger](https://www.jaegertracing.io/) | 1.18.1 | - | [http://jaeger.localhost](http://jaeger.localhost) | ```$ djaeger```
 
 When these services are started, the docker container that gets started bears the
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have

@@ -1,0 +1,6 @@
+version: "3"
+services:
+  dev-openzipkin:
+    network_mode: "host"
+    # environment:
+    #   - "ES_HOSTS=http://localhost:9200"

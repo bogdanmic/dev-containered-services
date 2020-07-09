@@ -27,24 +27,27 @@ services:
       # - "--entrypoints.rabbitmq.address=:5672"
       # - "--entrypoints.mysql.address=:3306"
       # - "--entrypoints.elasticsearch.address=:9300"
-      - '--tracing.serviceName=dev-traefik'
-      - '--tracing.spanNameLimit=250'
-      - '--tracing.zipkin=true'
-      - '--tracing.zipkin.httpEndpoint=http://dev-openzipkin:9411/api/v2/spans'
-      - '--tracing.zipkin.sameSpan=true'
-      - '--tracing.zipkin.id128Bit=true'
-      - '--tracing.zipkin.sampleRate=1'
+      # # TODO: If we want tracing with Zipkin then uncomment these
+      # - "--tracing=true"
+      # - "--tracing.serviceName=stg-traefik"
+      # - "--tracing.spanNameLimit=250"
+      # - "--tracing.zipkin=true"
+      # - "--tracing.zipkin.httpEndpoint=http://dev-openzipkin:9411/api/v2/spans"
+      # - "--tracing.zipkin.sameSpan=true"
+      # - "--tracing.zipkin.id128Bit=true"
+      # - "--tracing.zipkin.sampleRate=1"
+      # # TODO: If we want tracing with Jaeger then uncomment these
+      # - "--tracing=true"
+      # - "--tracing.serviceName=stg-traefik"
+      # - "--tracing.spanNameLimit=250"
       # - '--tracing.jaeger=true'
       # - '--tracing.jaeger.samplingServerURL=http://dev-jaeger:5778/sampling'
       # - '--tracing.jaeger.samplingType=const'
       # - '--tracing.jaeger.samplingParam=1'
-      # - '--tracing.jaeger.localAgentHostPort=127.0.0.1:6831'
+      # - '--tracing.jaeger.localAgentHostPort=dev-jaeger:6831'
       # - '--tracing.jaeger.gen128Bit'
-      # - '--tracing.jaeger.propagation=jaeger'
-      # - '--tracing.jaeger.traceContextHeaderName=uber-trace-id'
+      # - '--tracing.jaeger.propagation=b3'
       # - '--tracing.jaeger.collector.endpoint=http://dev-jaeger:14268/api/traces?format=jaeger.thrift'
-      # - '--tracing.jaeger.collector.user=my-user'
-      # - '--tracing.jaeger.collector.password=my-password'
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=dev-traefik-network"
