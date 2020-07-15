@@ -1,0 +1,4 @@
+version: "3"
+services:
+  dev-mailhog:
+    network_mode: "host"

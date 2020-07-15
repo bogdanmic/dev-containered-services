@@ -60,6 +60,7 @@ Service Name | Version | Credentials(*user:password*) | UI | Alias
 [keycloak](https://www.keycloak.org/) | 10.0.2 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
 [openzipkin](https://zipkin.io/) | 2.21.4 | - | [http://zipkin.localhost](http://zipkin.localhost) | ```$ dzipkin```
 [jaeger](https://www.jaegertracing.io/) | 1.18.1 | - | [http://jaeger.localhost](http://jaeger.localhost) | ```$ djaeger```
+[mailhog](https://github.com/mailhog/MailHog) | 1.0.0 | - | [http://mailhog.localhost](http://mailhog.localhost) | ```$ dmail```
 
 When these services are started, the docker container that gets started bears the
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have

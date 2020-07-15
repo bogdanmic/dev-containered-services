@@ -10,6 +10,7 @@ alias dkibana='drun kibana'
 alias dkeycloak='drun keycloak'
 alias dzipkin='drun openzipkin'
 alias djaeger='drun jaeger'
+alias dmail='drun mailhog'
 
 #TODO: How do we handle multiple versions for a service?
 
