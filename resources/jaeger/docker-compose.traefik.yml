@@ -3,11 +3,11 @@ services:
   dev-jaeger:
     labels:
       traefik.enable: "true"
-      traefik.docker.network: "dev-traefik-network"
+      traefik.docker.network: "dev-net-traefik"
       traefik.http.routers.dev-jaeger.entrypoints: "web"
       traefik.http.routers.dev-jaeger.rule: "Host(`jaeger.localhost`)"
       traefik.http.services.dev-jaeger.loadbalancer.server.port: "16686"
     networks:
-      - dev-traefik-network
+      - dev-net-traefik
     depends_on:
       - dev-traefik

@@ -3,11 +3,11 @@ services:
   dev-rabbit:
     labels:
       traefik.enable: "true"
-      traefik.docker.network: "dev-traefik-network"
+      traefik.docker.network: "dev-net-traefik"
       traefik.http.routers.dev-rabbit.entrypoints: "web"
       traefik.http.routers.dev-rabbit.rule: "Host(`rabbit.localhost`)"
       traefik.http.services.dev-rabbit.loadbalancer.server.port: "15672"
     networks:
-      - dev-traefik-network
+      - dev-net-traefik
     depends_on:
       - dev-traefik

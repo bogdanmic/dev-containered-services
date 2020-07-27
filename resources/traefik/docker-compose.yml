@@ -1,32 +1,23 @@
-version: "3"
+version: "3.4"
 networks:
   dev-traefik-network:
     external:
       name: dev-traefik-network
 services:
   dev-traefik:
-    image: "traefik:v2.2.1"
+    image: traefik:v2.2.1
     container_name: "dev-traefik"
     ports:
-      - "80:80" # The HTTP port through which all http services can be accessed
-      - "8080:8080" # The Web UI (enabled by --api.insecure=true)
-      # - "5432:5432" # The postgres port
-      # - "27017:27017" # The mongodb port
-      # - "5672:5672" # The rabbitmq port
-      # - "3306:3306" # The mysql port
-      # - "9300:9300" # The elasticsearch port
+      - 80:80 # The HTTP port through which all http services can be accessed
+      - 8080:8080 # The Web UI (enabled by --api.insecure=true)
     command:
       - "--api.dashboard=true"
       - "--api.insecure=true"
+      - "--ping=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false" # If set to false, containers that don't have a traefik.enable=true label will be ignored from the resulting routing configuration.
       - "--entrypoints.web.address=:80"
       - "--entryPoints.web.forwardedHeaders.insecure"
-      # - "--entrypoints.postgresql.address=:5432"
-      # - "--entrypoints.mongodb.address=:27017"
-      # - "--entrypoints.rabbitmq.address=:5672"
-      # - "--entrypoints.mysql.address=:3306"
-      # - "--entrypoints.elasticsearch.address=:9300"
       # # TODO: If we want tracing with Zipkin then uncomment these
       # - "--tracing=true"
       # - "--tracing.serviceName=stg-traefik"
@@ -48,16 +39,14 @@ services:
       # - '--tracing.jaeger.gen128Bit'
       # - '--tracing.jaeger.propagation=b3'
       # - '--tracing.jaeger.collector.endpoint=http://dev-jaeger:14268/api/traces?format=jaeger.thrift'
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=dev-traefik-network"
-      - "traefik.http.routers.dev-traefik.entrypoints=web"
-      - "traefik.http.routers.dev-traefik.rule=Host(`traefik.localhost`)"
-      - "traefik.http.services.dev-traefik.loadbalancer.server.port=8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    networks:
-      - dev-traefik-network
+    healthcheck:
+      test: traefik healthcheck --ping
+      interval: 30s
+      timeout: 15s
+      retries: 2
+      start_period: 20s
     logging:
       driver: "json-file"
       options:

@@ -3,9 +3,9 @@ services:
   dev-traefik:
     labels:
       traefik.enable: "true"
-      traefik.docker.network: "dev-traefik-network"
+      traefik.docker.network: "dev-net-traefik"
       traefik.http.routers.dev-traefik.entrypoints: "web"
       traefik.http.routers.dev-traefik.rule: "Host(`traefik.localhost`)"
       traefik.http.services.dev-traefik.loadbalancer.server.port: "8080"
     networks:
-      - dev-traefik-network
+      - dev-net-traefik
