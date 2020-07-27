@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   dev-rabbit:
-    image: "rabbitmq:3.8.5-management"
+    image: rabbitmq:3.8.5-management
     container_name: dev-rabbit
     expose:
       - 15672
@@ -16,8 +16,14 @@ services:
       RABBITMQ_DEFAULT_PASS: "guest"
     volumes:
       - "$DEV_CONTAINERS_HOME/dev-rabbit:/var/lib/rabbitmq"
+    healthcheck:
+      test: rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_local_alarms
+      interval: 30s
+      timeout: 15s
+      retries: 2
+      start_period: 20s
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "5"
