@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   dev-consul:
     image: "consul:1.8.0"
@@ -8,9 +8,9 @@ services:
       - 8600
       - 8500
     ports:
-      - "8300:8300"
-      - "8600:8600"
-      - "8500:8500"
+      - 8300:8300
+      - 8600:8600
+      - 8500:8500
     command: "agent -dev -ui -client=0.0.0.0"
     logging:
       driver: "json-file"

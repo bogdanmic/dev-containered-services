@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   dev-keycloak:
     image: "jboss/keycloak:10.0.2"
@@ -6,7 +6,7 @@ services:
     expose:
       - 8080
     ports:
-      - "8181:8080"
+      - 8181:8080
     environment: # why this address https://stackoverflow.com/questions/54763936/communication-between-microservices-with-docker-compose-and-traefik
       # - "PROXY_ADDRESS_FORWARDING=true"
       DB_VENDOR: POSTGRES

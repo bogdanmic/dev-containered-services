@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   dev-mailhog:
     image: mailhog/mailhog:v1.0.0
