@@ -11,7 +11,7 @@ services:
       - 16686:16686
     # Configure it so we can collect data in the zipkin format
     environment:
-      - "COLLECTOR_ZIPKIN_HTTP_PORT=9411"
+      COLLECTOR_ZIPKIN_HTTP_PORT: 9411
     logging:
       driver: "json-file"
       options:
