@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  dev-elasticsearch:
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dev-elasticsearch.entrypoints: "web"
+      traefik.http.routers.dev-elasticsearch.rule: "Host(`elasticsearch.localhost`)"
+      traefik.http.services.dev-elasticsearch.loadbalancer.server.port: "9200"
+    networks:
+      - dev-net-trfk
+    depends_on: 
+      - dev-traefik

@@ -1,0 +1,22 @@
+version: "3.4"
+services:
+  dev-mailhog:
+    image: mailhog/mailhog:v1.0.0
+    container_name: dev-mailhog
+    expose:
+      - 1025
+      - 8025
+    ports:
+      - 1025:1025
+      - 8025:8025
+    healthcheck:
+      test: echo | telnet 127.0.0.1 1025
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"

@@ -3,7 +3,6 @@
 # Takes one argument.
 # It starts in docker the service received as argument
 # e.g. 'drun consul' will start 2 containers with consul and traefik. All services depend on traefik
-# TODO: Make it able to take multple services as arguments.
 
 SCRIPT_PATH="$(
     cd "$(dirname "$0")"
@@ -14,26 +13,54 @@ CONTAINERS_HOME="$SCRIPT_PATH/../.containers_home"
 
 # Transform the arguments in the propper format for our docker-compose command
 args=("$@")
-SERVICES=()
-SERVICES_FILE=()
+SERVICE_NAME=()
+AS_HOST=false
 for arg in "${args[@]}"; do
-    SERVICES=("${SERVICES[@]}" "dev-$arg")
-    SERVICES_FILE=("${SERVICES_FILE[@]}" "$arg")
+    case $arg in
+        -h|--host)
+            AS_HOST=true
+            shift # past flag
+        ;;
+        *)
+            # unknown option probably it's the service name
+            SERVICE_NAME=("${SERVICES[@]}" "$arg")
+        ;;
+    esac
 done
 
 # Transform the array into a string
-printf -v SERVICES_STR "%s\n" "${SERVICES[@]}"
-SERVICES_STR=${SERVICES_STR%?}
+printf -v SERVICE_NAME_STR "%s\n" "${SERVICE_NAME[@]}"
+SERVICE_NAME_STR=${SERVICE_NAME_STR%?}
 
 if [[ ! $1 ]]; then
     printf "\e[31m[ERROR]\e[39m You need to specify a service you want to start.\n"
     exit 1
 fi
 
-echo -e "\e[32m[STARTING]\e[39m "$SERVICES_STR" ..."
+if [ "$AS_HOST" = true ]; then
+    echo -e "\e[32m[STARTING]\e[39m "$SERVICE_NAME_STR" on HOST network ..."
+else
+    echo -e "\e[32m[STARTING]\e[39m "$SERVICE_NAME_STR" on TRAEFIK network ..."
+fi
 sleep 1
-# Specify first where the containers should store their data
-export DEV_CONTAINERS_HOME=$CONTAINERS_HOME &&
-    docker-compose -f $RESOURCES_PATH/traefik.docker-compose.yml -f $RESOURCES_PATH/$SERVICES_FILE.docker-compose.yml up --build $SERVICES_STR
 
-echo -e "\e[34m[STOPPED]\e[39m "$SERVICES_STR"!\n"
+if [ "$AS_HOST" = true ]; then
+    # Remove the container from docker because if we run it under the same name with network host mode or intraefik there will be conflicts
+    # then specify where the containers should store their data
+    docker rm "dev-$SERVICE_NAME_STR" && \ 
+        export DEV_CONTAINERS_HOME=$CONTAINERS_HOME && \
+        docker-compose -f $RESOURCES_PATH/$SERVICE_NAME_STR/docker-compose.yml \
+                       -f $RESOURCES_PATH/$SERVICE_NAME_STR/docker-compose.host.yml \
+                       up --build "dev-$SERVICE_NAME_STR"
+else
+    # Remove the container from docker because if we run it under the same name with network host mode or intraefik there will be conflicts
+    # then specify where the containers should store their data
+    docker rm "dev-$SERVICE_NAME_STR" && \ 
+        export DEV_CONTAINERS_HOME=$CONTAINERS_HOME && \
+        docker-compose -f $RESOURCES_PATH/traefik/docker-compose.yml \
+                       -f $RESOURCES_PATH/$SERVICE_NAME_STR/docker-compose.yml \
+                       -f $RESOURCES_PATH/$SERVICE_NAME_STR/docker-compose.traefik.yml \
+                       up --build "dev-$SERVICE_NAME_STR"
+fi
+
+echo -e "\e[34m[STOPPED]\e[39m "$SERVICE_NAME_STR"!\n"

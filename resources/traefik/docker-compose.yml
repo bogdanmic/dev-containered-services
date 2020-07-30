@@ -1,0 +1,64 @@
+version: "3.4"
+networks:
+  dev-net-trfk:
+    external:
+      name: dev-net-trfk
+services:
+  dev-traefik:
+    image: traefik:v2.2.1
+    container_name: "dev-traefik"
+    ports:
+      - 80:80 # The HTTP port through which all http services can be accessed
+      - 8080:8080 # The Web UI (enabled by --api.insecure=true)
+    # These configurations (networks and labels) are needed here for when we run this in conjunction with other services
+    networks:
+      - dev-net-trfk
+    labels:
+      traefik.enable: "true"
+      # traefik.docker.network: "dev-net-trfk" # This can be used to overwrite the --providers.docker.network argument
+      traefik.http.routers.dev-traefik.entrypoints: "web"
+      traefik.http.routers.dev-traefik.rule: "Host(`traefik.localhost`)"
+      traefik.http.services.dev-traefik.loadbalancer.server.port: "8080"
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--ping=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false" # If set to false, containers that don't have a traefik.enable=true label will be ignored from the resulting routing configuration.
+      - "--providers.docker.network=dev-net-trfk"
+      - "--entrypoints.web.address=:80"
+      - "--entryPoints.web.forwardedHeaders.insecure"
+      # # TODO: If we want tracing with Zipkin then uncomment these
+      # - "--tracing=true"
+      # - "--tracing.serviceName=stg-traefik"
+      # - "--tracing.spanNameLimit=250"
+      # - "--tracing.zipkin=true"
+      # - "--tracing.zipkin.httpEndpoint=http://dev-openzipkin:9411/api/v2/spans"
+      # - "--tracing.zipkin.sameSpan=true"
+      # - "--tracing.zipkin.id128Bit=true"
+      # - "--tracing.zipkin.sampleRate=1"
+      # # TODO: If we want tracing with Jaeger then uncomment these
+      # - "--tracing=true"
+      # - "--tracing.serviceName=stg-traefik"
+      # - "--tracing.spanNameLimit=250"
+      # - '--tracing.jaeger=true'
+      # - '--tracing.jaeger.samplingServerURL=http://dev-jaeger:5778/sampling'
+      # - '--tracing.jaeger.samplingType=const'
+      # - '--tracing.jaeger.samplingParam=1'
+      # - '--tracing.jaeger.localAgentHostPort=dev-jaeger:6831'
+      # - '--tracing.jaeger.gen128Bit'
+      # - '--tracing.jaeger.propagation=b3'
+      # - '--tracing.jaeger.collector.endpoint=http://dev-jaeger:14268/api/traces?format=jaeger.thrift'
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    healthcheck:
+      test: traefik healthcheck --ping
+      interval: 30s
+      timeout: 15s
+      retries: 2
+      start_period: 20s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"

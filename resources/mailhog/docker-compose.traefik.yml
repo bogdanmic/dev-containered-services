@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  dev-mailhog:
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dev-mailhog.entrypoints: "web"
+      traefik.http.routers.dev-mailhog.rule: "Host(`mailhog.localhost`)"
+      traefik.http.services.dev-mailhog.loadbalancer.server.port: "8025"
+    networks:
+      - dev-net-trfk
+    depends_on:
+      - dev-traefik

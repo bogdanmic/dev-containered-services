@@ -1,0 +1,5 @@
+version: "3.4"
+services:
+  dev-mysql:
+    networks:
+      - dev-net-trfk

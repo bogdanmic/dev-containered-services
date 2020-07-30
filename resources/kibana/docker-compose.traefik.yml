@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  dev-kibana:
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dev-kibana.entrypoints: "web"
+      traefik.http.routers.dev-kibana.rule: "Host(`kibana.localhost`)"
+      traefik.http.services.dev-kibana.loadbalancer.server.port: "5601"
+    environment: # why this address https://stackoverflow.com/questions/54763936/communication-between-microservices-with-docker-compose-and-traefik
+      ELASTICSEARCH_HOSTS: http://dev-elasticsearch:9200/
+    networks:
+      - dev-net-trfk
+    depends_on: 
+      - dev-traefik

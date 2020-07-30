@@ -1,0 +1,26 @@
+version: "3.4"
+services:
+  dev-mysql:
+    image: mysql:8.0.20
+    container_name: dev-mysql
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_user
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - "$DEV_CONTAINERS_HOME/dev-mysql:/var/lib/mysql"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"

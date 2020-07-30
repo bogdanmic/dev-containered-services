@@ -1,20 +1,14 @@
-version: "3"
+version: "3.4"
 services:
   dev-elasticsearch:
-    image: "elasticsearch:7.6.2"
+    image: elasticsearch:7.8.0
     container_name: dev-elasticsearch
     expose:
       - 9200
       - 9300
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=dev-traefik-network"
-      - "traefik.tcp.routers.dev-elasticsearch.entrypoints=elasticsearch"
-      - "traefik.tcp.routers.dev-elasticsearch.rule=HostSNI(`*`)"
-      - "traefik.tcp.services.dev-elasticsearch.loadbalancer.server.port=9300"
-      - "traefik.http.routers.dev-elasticsearch.entrypoints=web"
-      - "traefik.http.routers.dev-elasticsearch.rule=Host(`elasticsearch.localhost`)"
-      - "traefik.http.services.dev-elasticsearch.loadbalancer.server.port=9200"
+    ports:
+      - 9200:9200
+      - 9300:9300
     environment:
       - cluster.name=dev-elasticsearch
       - discovery.type=single-node
@@ -38,12 +32,14 @@ services:
         # From: https://www.elastic.co/guide/en/elasticsearch/reference/current/file-descriptors.html
         soft: 65536
         hard: 65536
-    networks:
-      - dev-traefik-network
-    depends_on: 
-      - dev-traefik
+    healthcheck:
+      test:  curl --fail --silent http://127.0.0.1:9200/_cluster/health?wait_for_status=yellow&timeout=13s || exit 1
+      interval: 30s
+      timeout: 15s
+      retries: 2
+      start_period: 30s
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "5"

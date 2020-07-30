@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  dev-rabbit:
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dev-rabbit.entrypoints: "web"
+      traefik.http.routers.dev-rabbit.rule: "Host(`rabbit.localhost`)"
+      traefik.http.services.dev-rabbit.loadbalancer.server.port: "15672"
+    networks:
+      - dev-net-trfk
+    depends_on:
+      - dev-traefik

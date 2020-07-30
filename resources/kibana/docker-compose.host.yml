@@ -1,0 +1,6 @@
+version: "3.4"
+services:
+  dev-kibana:
+    network_mode: "host"
+    environment: # why this address https://stackoverflow.com/questions/54763936/communication-between-microservices-with-docker-compose-and-traefik
+      ELASTICSEARCH_HOSTS: http://localhost:9200/

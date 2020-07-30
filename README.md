@@ -4,24 +4,34 @@ docker instead of having them installed on your system. These are mainly used fo
 development but **docker-compose files** can be used as a starting point for
 other scenarios as well.
 
+#### Note
+This repository was tested on **Linux** more specifically on Ubuntu based 
+distributions like: **Ubuntu**, **Linux Mint** and other Ubuntu official 
+flavours. Using this in WSL for Windows with a Ubuntu distribution might work.
+
 ### Prerequisites
 In order to run this project you need the following:
  - [docker](https://www.docker.com/community-edition#/download)
  - [docker-compose](https://docs.docker.com/compose/install/)
+ - [Linux Mint](https://www.linuxmint.com/) or a compatible Ubuntu based distribution. 
+ It might work with [Ubuntu in WSL2](https://ubuntu.com/blog/ubuntu-on-wsl-2-is-generally-available) 
+ as well.
 
 ## Intro
-This repository offers a handful of services described in their corresponding [**<SERVICE_NAME>.docker-compose.yml**](resources/) file.
+This repository offers a handful of services described in their corresponding 
+[**<SERVICE_NAME>/docker-compose.yml**](resources/) file.
 These services can be interacted with using a few CLI utilities built here:
  - **drun** - starts a service inside a docker container e.g. ```$ drun consul```
  will start the consul service. Bear in mind that these services use **traefik**
- so if traefik is not started then it will be. 
- - **erun** - allows us to execute commands in a started service e.g. ```$ erun consul consul members``` 
- will execute the *consul members* command inside the started *consul* docker container 
+ so if traefik is not started then it will be. If you want to start the service 
+ using the host network, use the ```-h|--host``` flag
+ - **erun** - allows us to execute commands in a started service e.g. 
+ ```$ erun consul consul members``` will execute the *consul members* command 
+ inside the started *consul* docker container 
 
- **Why I chose to use a reverse proxy like traefik?**
- 
- Well that is easy to answer. I don't like remembering all the ports for the web
- UIs and also it makes thinks easier when interconnecting services.
+**Why I chose to use a reverse proxy like traefik?**
+
+Well that is easy to answer. I don't like remembering all the ports for the web UIs.
 
 ## Installation
 If you wish to use this repository in your development process, all you need to do is:
@@ -31,7 +41,7 @@ If you wish to use this repository in your development process, all you need to 
  During the installation process you will be asked to add the **bin/** folder to 
  your path in **.bashrc** file and if you want, you can also add to your **.bashrc** 
  file some common and helpful aliases to interact with this CLI utility. Also a docker
- network resource named **dev-traefik-network** will be created.
+ network resource named **dev-net-trfk** will be created.
 
 ## Available services
 If you want to start a service, all you need to do is ```drun SERVICE_NAME``` where
@@ -40,18 +50,28 @@ If you want to start a service, all you need to do is ```drun SERVICE_NAME``` wh
 Service Name | Version | Credentials(*user:password*) | UI | Alias
 --- | --- | --- | --- | ---
 [traefik](https://containo.us/traefik/) | 2.2.1 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik```
-[consul](https://www.consul.io/) | 1.7.2 | - | [http://consul.localhost](http://consul.localhost) | ```$ dconsul```
-[postgres](https://www.postgresql.org/) | 12.2 | postgres:postgres | - | ```$ dpostgres```
-[mongo](https://www.mongodb.com/) | 4.2.6 | root:root | - | ```$ dmongo```
-[rabbit](https://www.rabbitmq.com/) | 3.8.3 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
+[consul](https://www.consul.io/) | 1.8.0 | - | [http://localhost:8500](http://localhost:8500) | ```$ dconsul```
+[postgres](https://www.postgresql.org/) | 12.3 | postgres:postgres | - | ```$ dpostgres```
+[mongo](https://www.mongodb.com/) | 4.2.8 | root:root | - | ```$ dmongo```
+[rabbit](https://www.rabbitmq.com/) | 3.8.5 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
 [mysql](https://www.mysql.com/) | 8.0.20 | root:root | - | ```$ dmysql```
-[elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.6.2 | - | - | ```$ delastic```
-[kibana](https://www.elastic.co/products/kibana) | 7.6.2 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
-[keycloak](https://www.keycloak.org/) | 10.0.0 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
+[elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.8.0 | - | - | ```$ delastic```
+[kibana](https://www.elastic.co/products/kibana) | 7.8.0 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
+[keycloak](https://www.keycloak.org/) | 10.0.2 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
+[openzipkin](https://zipkin.io/) | 2.21.4 | - | [http://zipkin.localhost](http://zipkin.localhost) | ```$ dzipkin```
+[jaeger](https://www.jaegertracing.io/) | 1.18.1 | - | [http://jaeger.localhost](http://jaeger.localhost) | ```$ djaeger```
+[mailhog](https://github.com/mailhog/MailHog) | 1.0.0 | - | [http://mailhog.localhost](http://mailhog.localhost) | ```$ dmail```
 
 When these services are started, the docker container that gets started bears the
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have
-been configured so that they can be used in production if desired. I will try to keep these versions up to date.
+been configured so that they can be used in production if desired. I will try 
+to keep these versions up to date.
+
+#### Note
+The ```$ dconsul``` is equivalent to ```$ drun consul --host``` basically it starts
+consul using the host network. This should work for most development needs but if
+you wish to have consul running in the docker **dev-net-trfk** for some
+reason, start it using the default command ```$ drun consul```
 
 ### KEYCLOAK Prerequisites:
  - the **postgres** service running
@@ -168,8 +188,9 @@ $ curl -X PUT \
           \"include_global_state\": false
         }"
 ```
-Bellow we will handle the restoring of a snapshot that we got from another elastic search server.
-Usually this is done by copying the BACKUP_FOLDER_NAME from that server onto the new one and following the next steps.
+Bellow we will handle the restoring of a snapshot that we got from another elastic 
+search server. Usually this is done by copying the BACKUP_FOLDER_NAME from that 
+server onto the new one and following the next steps.
 ```bash
 # Now if you followed the recommendations above, you should be in possession of a tar/zip file
 # that contains the BACKUP_FOLDER_NAME created above Take that and extract it into

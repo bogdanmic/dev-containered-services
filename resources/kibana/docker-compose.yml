@@ -1,25 +1,23 @@
-version: "3"
+version: "3.4"
 services:
   dev-kibana:
     # Apparently the version of kibana is dependent on the version of elasticsearch
-    image: "kibana:7.6.2"
+    image: kibana:7.8.0
     container_name: dev-kibana
     expose:
       - 5601
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=dev-traefik-network"
-      - "traefik.http.routers.dev-kibana.entrypoints=web"
-      - "traefik.http.routers.dev-kibana.rule=Host(`kibana.localhost`)"
-      - "traefik.http.services.dev-kibana.loadbalancer.server.port=5601"
+    ports:
+      - 5601:5601
     environment: # why this address https://stackoverflow.com/questions/54763936/communication-between-microservices-with-docker-compose-and-traefik
       ELASTICSEARCH_HOSTS: http://dev-elasticsearch:9200/
-    networks:
-      - dev-traefik-network
-    depends_on: 
-      - dev-traefik
+    healthcheck:
+      test:  curl --fail --silent http://127.0.0.1:5601/api/status || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 30s
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "5"

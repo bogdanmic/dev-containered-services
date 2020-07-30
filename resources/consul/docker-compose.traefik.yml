@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  dev-consul:
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dev-consul.entrypoints: "web"
+      traefik.http.routers.dev-consul.rule: "Host(`consul.localhost`)"
+      traefik.http.services.dev-consul.loadbalancer.server.port: "8500"
+    networks:
+      - dev-net-trfk
+    depends_on:
+      - dev-traefik

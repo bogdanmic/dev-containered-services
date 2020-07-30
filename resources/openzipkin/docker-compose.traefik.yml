@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  dev-openzipkin:
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dev-openzipkin.entrypoints: "web"
+      traefik.http.routers.dev-openzipkin.rule: "Host(`zipkin.localhost`)"
+      traefik.http.services.dev-openzipkin.loadbalancer.server.port: "9411"
+    networks:
+      - dev-net-trfk
+    depends_on:
+      - dev-traefik
