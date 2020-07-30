@@ -41,7 +41,7 @@ If you wish to use this repository in your development process, all you need to 
  During the installation process you will be asked to add the **bin/** folder to 
  your path in **.bashrc** file and if you want, you can also add to your **.bashrc** 
  file some common and helpful aliases to interact with this CLI utility. Also a docker
- network resource named **dev-traefik-network** will be created.
+ network resource named **dev-net-trfk** will be created.
 
 ## Available services
 If you want to start a service, all you need to do is ```drun SERVICE_NAME``` where
@@ -70,7 +70,7 @@ to keep these versions up to date.
 #### Note
 The ```$ dconsul``` is equivalent to ```$ drun consul --host``` basically it starts
 consul using the host network. This should work for most development needs but if
-you wish to have consul running in the docker **dev-traefik-network** for some
+you wish to have consul running in the docker **dev-net-trfk** for some
 reason, start it using the default command ```$ drun consul```
 
 ### KEYCLOAK Prerequisites:

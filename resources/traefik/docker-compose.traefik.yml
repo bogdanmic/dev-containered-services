@@ -1,11 +1,11 @@
-version: "3"
+version: "3.4"
 services:
   dev-traefik:
+  # These configs need to be kept in sync with the ones in the main docker-compose.yml file
     labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=dev-traefik-network"
-      - "traefik.http.routers.dev-traefik.entrypoints=web"
-      - "traefik.http.routers.dev-traefik.rule=Host(`traefik.localhost`)"
-      - "traefik.http.services.dev-traefik.loadbalancer.server.port=8080"
+      traefik.enable: "true"
+      traefik.http.routers.dev-traefik.entrypoints: "web"
+      traefik.http.routers.dev-traefik.rule: "Host(`traefik.localhost`)"
+      traefik.http.services.dev-traefik.loadbalancer.server.port: "8080"
     networks:
-      - dev-traefik-network
+      - dev-net-trfk

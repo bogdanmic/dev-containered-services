@@ -1,7 +1,7 @@
-version: "3"
+version: "3.4"
 services:
   dev-mongo:
-    image: "mongo:4.2.8"
+    image: mongo:4.2.8
     container_name: dev-mongo
     expose:
       - 27017
@@ -12,6 +12,12 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
       - "$DEV_CONTAINERS_HOME/dev-mongo:/data/db"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 30s
     logging:
       driver: "json-file"
       options:

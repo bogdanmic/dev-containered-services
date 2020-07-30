@@ -1,12 +1,12 @@
-version: "3"
+version: "3.4"
 services:
   dev-keycloak:
-    image: "jboss/keycloak:10.0.2"
+    image: jboss/keycloak:10.0.2
     container_name: dev-keycloak
     expose:
       - 8080
     ports:
-      - "8181:8080"
+      - 8181:8080
     environment: # why this address https://stackoverflow.com/questions/54763936/communication-between-microservices-with-docker-compose-and-traefik
       # - "PROXY_ADDRESS_FORWARDING=true"
       DB_VENDOR: POSTGRES
@@ -17,6 +17,12 @@ services:
       DB_PASSWORD: postgres
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+    healthcheck:
+      test: curl --fail --silent http://localhost:8080/auth/realms/master/.well-known/openid-configuration || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 30s
     logging:
       driver: "json-file"
       options:

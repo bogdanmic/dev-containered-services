@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   dev-jaeger:
     network_mode: "host"

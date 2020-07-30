@@ -1,19 +1,25 @@
-version: "3"
+version: "3.4"
 services:
   dev-consul:
-    image: "consul:1.8.0"
+    image: consul:1.8.0
     container_name: dev-consul
     expose:
       - 8300
       - 8600
       - 8500
     ports:
-      - "8300:8300"
-      - "8600:8600"
-      - "8500:8500"
+      - 8300:8300
+      - 8600:8600
+      - 8500:8500
     command: "agent -dev -ui -client=0.0.0.0"
+    healthcheck:
+      test: curl --fail --silent http://127.0.0.1:8500/v1/status/leader || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "5"

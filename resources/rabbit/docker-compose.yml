@@ -1,7 +1,7 @@
-version: "3"
+version: "3.4"
 services:
   dev-rabbit:
-    image: "rabbitmq:3.8.5-management"
+    image: rabbitmq:3.8.5-management
     container_name: dev-rabbit
     expose:
       - 15672
@@ -9,12 +9,6 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=dev-traefik-network"
-      - "traefik.http.routers.dev-rabbit.entrypoints=web"
-      - "traefik.http.routers.dev-rabbit.rule=Host(`rabbit.localhost`)"
-      - "traefik.http.services.dev-rabbit.loadbalancer.server.port=15672"
     hostname: "dev-rabbit"
     environment:
       RABBITMQ_VM_MEMORY_HIGH_WATERMARK: 1024MiB
@@ -22,8 +16,14 @@ services:
       RABBITMQ_DEFAULT_PASS: "guest"
     volumes:
       - "$DEV_CONTAINERS_HOME/dev-rabbit:/var/lib/rabbitmq"
+    healthcheck:
+      test: rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_local_alarms
+      interval: 30s
+      timeout: 15s
+      retries: 2
+      start_period: 20s
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "5"

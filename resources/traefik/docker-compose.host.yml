@@ -1,8 +1,4 @@
-version: "3"
-networks:
-  dev-traefik-network:
-    external:
-      name: dev-traefik-network
+version: "3.4"
 services:
   dev-traefik:
     #This can not be run as network host
