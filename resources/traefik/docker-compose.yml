@@ -1,8 +1,8 @@
 version: "3.4"
 networks:
-  dev-traefik-network:
+  dev-net-trfk:
     external:
-      name: dev-traefik-network
+      name: dev-net-trfk
 services:
   dev-traefik:
     image: traefik:v2.2.1
@@ -10,12 +10,22 @@ services:
     ports:
       - 80:80 # The HTTP port through which all http services can be accessed
       - 8080:8080 # The Web UI (enabled by --api.insecure=true)
+    # These configurations (networks and labels) are needed here for when we run this in conjunction with other services
+    networks:
+      - dev-net-trfk
+    labels:
+      traefik.enable: "true"
+      # traefik.docker.network: "dev-net-trfk" # This can be used to overwrite the --providers.docker.network argument
+      traefik.http.routers.dev-traefik.entrypoints: "web"
+      traefik.http.routers.dev-traefik.rule: "Host(`traefik.localhost`)"
+      traefik.http.services.dev-traefik.loadbalancer.server.port: "8080"
     command:
       - "--api.dashboard=true"
       - "--api.insecure=true"
       - "--ping=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false" # If set to false, containers that don't have a traefik.enable=true label will be ignored from the resulting routing configuration.
+      - "--providers.docker.network=dev-net-trfk"
       - "--entrypoints.web.address=:80"
       - "--entryPoints.web.forwardedHeaders.insecure"
       # # TODO: If we want tracing with Zipkin then uncomment these
