@@ -47,7 +47,7 @@ sleep 1
 if [ "$AS_HOST" = true ]; then
     # Remove the container from docker because if we run it under the same name with network host mode or intraefik there will be conflicts
     # then specify where the containers should store their data
-    docker rm "dev-$SERVICE_NAME_STR" && \ 
+    docker rm "dev-$SERVICE_NAME_STR" && \
         export DEV_CONTAINERS_HOME=$CONTAINERS_HOME && \
         docker-compose -f $RESOURCES_PATH/$SERVICE_NAME_STR/docker-compose.yml \
                        -f $RESOURCES_PATH/$SERVICE_NAME_STR/docker-compose.host.yml \
@@ -55,7 +55,7 @@ if [ "$AS_HOST" = true ]; then
 else
     # Remove the container from docker because if we run it under the same name with network host mode or intraefik there will be conflicts
     # then specify where the containers should store their data
-    docker rm "dev-$SERVICE_NAME_STR" && \ 
+    docker rm "dev-$SERVICE_NAME_STR" && \
         export DEV_CONTAINERS_HOME=$CONTAINERS_HOME && \
         docker-compose -f $RESOURCES_PATH/traefik/docker-compose.yml \
                        -f $RESOURCES_PATH/$SERVICE_NAME_STR/docker-compose.yml \
