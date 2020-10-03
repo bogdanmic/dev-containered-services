@@ -1,4 +1,4 @@
-# dev-container-services
+# dev-services
 This project contains a set of **"recipes"** to run a few services inside 
 docker instead of having them installed on your system. These are mainly used for 
 development but **docker-compose files** can be used as a starting point for
@@ -104,6 +104,17 @@ $ PGPASSWORD=postgres erun postgres psql -h localhost -U postgres
 ### Usage example
 # To restore a database dump DB_BACKUP_FILE into a database DB_NAME
 $ cat DB_BACKUP_FILE | epsql DB_NAME
+```
+### epgdump 
+```bash
+# Alias equivalent
+$ docker exec -i dev-postgres pg_dump -h localhost -U postgres
+
+### Usage example
+# To backup a local docker database DB_NAME into a DB_BACKUP_FILE
+$ epgdump -U postgres DB_NAME > DB_BACKUP_FILE
+# To backup a remote database DB_NAME into a DB_BACKUP_FILE
+$ epgdump -h REMOTE_HOST -U REMOTE_USER DB_NAME > DB_BACKUP_FILE
 ```
 ### emongodump 
 ```bash
