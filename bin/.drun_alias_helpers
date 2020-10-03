@@ -17,6 +17,7 @@ alias dmail='drun mailhog'
 # Aliases to execute commands in the started services
 alias econsul='erun consul consul'
 alias epsql='PGPASSWORD=postgres erun postgres psql -h localhost -U postgres'
+alias epgdump='erun postgres pg_dump'
 alias emongorestore='erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive'
 alias emongodump='erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db'
 alias emysqlrestore='erun mysql mysql -uroot -proot'
