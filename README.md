@@ -1,4 +1,4 @@
-# dev-container-services
+# dev-services
 This project contains a set of **"recipes"** to run a few services inside 
 docker instead of having them installed on your system. These are mainly used for 
 development but **docker-compose files** can be used as a starting point for
@@ -49,18 +49,18 @@ If you want to start a service, all you need to do is ```drun SERVICE_NAME``` wh
 
 Service Name | Version | Credentials(*user:password*) | UI | Alias
 --- | --- | --- | --- | ---
-[traefik](https://containo.us/traefik/) | 2.2.1 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik```
-[consul](https://www.consul.io/) | 1.8.0 | - | [http://localhost:8500](http://localhost:8500) | ```$ dconsul```
-[postgres](https://www.postgresql.org/) | 12.3 | postgres:postgres | - | ```$ dpostgres```
-[mongo](https://www.mongodb.com/) | 4.2.8 | root:root | - | ```$ dmongo```
-[rabbit](https://www.rabbitmq.com/) | 3.8.5 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
-[mysql](https://www.mysql.com/) | 8.0.20 | root:root | - | ```$ dmysql```
-[elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.8.0 | - | - | ```$ delastic```
-[kibana](https://www.elastic.co/products/kibana) | 7.8.0 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
-[keycloak](https://www.keycloak.org/) | 10.0.2 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
-[openzipkin](https://zipkin.io/) | 2.21.4 | - | [http://zipkin.localhost](http://zipkin.localhost) | ```$ dzipkin```
-[jaeger](https://www.jaegertracing.io/) | 1.18.1 | - | [http://jaeger.localhost](http://jaeger.localhost) | ```$ djaeger```
-[mailhog](https://github.com/mailhog/MailHog) | 1.0.0 | - | [http://mailhog.localhost](http://mailhog.localhost) | ```$ dmail```
+[traefik](https://containo.us/traefik/) | 2.3.1 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik```
+[consul](https://www.consul.io/) | 1.8.4 | - | [http://localhost:8500](http://localhost:8500) | ```$ dconsul```
+[postgres](https://www.postgresql.org/) | 12.4 | postgres:postgres | - | ```$ dpostgres```
+[mongo](https://www.mongodb.com/) | 4.4.1 | root:root | - | ```$ dmongo```
+[rabbit](https://www.rabbitmq.com/) | 3.8.9 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
+[mysql](https://www.mysql.com/) | 8.0.21 | root:root | - | ```$ dmysql```
+[elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.9.2 | - | - | ```$ delastic```
+[kibana](https://www.elastic.co/products/kibana) | 7.9.2 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
+[keycloak](https://www.keycloak.org/) | 11.0.2 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
+[openzipkin](https://zipkin.io/) | 2.21.7 | - | [http://zipkin.localhost](http://zipkin.localhost) | ```$ dzipkin```
+[jaeger](https://www.jaegertracing.io/) | 1.20.0 | - | [http://jaeger.localhost](http://jaeger.localhost) | ```$ djaeger```
+[mailhog](https://github.com/mailhog/MailHog) | 1.0.1 | - | [http://mailhog.localhost](http://mailhog.localhost) | ```$ dmail```
 
 When these services are started, the docker container that gets started bears the
 name ***dev-[SERVICE_NAME]*** . I would like to believe that these containers have
@@ -104,6 +104,17 @@ $ PGPASSWORD=postgres erun postgres psql -h localhost -U postgres
 ### Usage example
 # To restore a database dump DB_BACKUP_FILE into a database DB_NAME
 $ cat DB_BACKUP_FILE | epsql DB_NAME
+```
+### epgdump 
+```bash
+# Alias equivalent
+$ docker exec -i dev-postgres pg_dump -h localhost -U postgres
+
+### Usage example
+# To backup a local docker database DB_NAME into a DB_BACKUP_FILE
+$ epgdump -U postgres DB_NAME > DB_BACKUP_FILE
+# To backup a remote database DB_NAME into a DB_BACKUP_FILE
+$ epgdump -h REMOTE_HOST -U REMOTE_USER DB_NAME > DB_BACKUP_FILE
 ```
 ### emongodump 
 ```bash

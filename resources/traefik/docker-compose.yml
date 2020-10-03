@@ -5,8 +5,8 @@ networks:
       name: dev-net-trfk
 services:
   dev-traefik:
-    image: traefik:v2.2.1
-    container_name: "dev-traefik"
+    image: traefik:v2.3.1
+    container_name: dev-traefik
     ports:
       - 80:80 # The HTTP port through which all http services can be accessed
       - 8080:8080 # The Web UI (enabled by --api.insecure=true)

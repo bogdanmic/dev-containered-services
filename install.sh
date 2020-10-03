@@ -24,15 +24,6 @@ output() {
     fi
 }
 
-askInput() {
-    output "$1" "$2"
-
-    read -e input
-    # If empty, use the default
-    inputOrDefault=${input:=$2}
-    echo $inputOrDefault # This is how we return something
-}
-
 continueYesNo() {
     output "$1" "Y/n"
     read -n 1 -r
@@ -46,10 +37,21 @@ continueYesNo() {
     fi
 }
 
+if [ -f "$HOME/.bashrc" ]; then
+    PROFILE_FILE="$HOME/.bashrc"
+elif [ -f "$HOME/.zshrc" ]; then
+    PROFILE_FILE="$HOME/.zshrc"
+elif [ -f "$HOME/.zprofile" ]; then
+    PROFILE_FILE="$HOME/.zprofile"
+else
+    printf "\e[31m[ERROR]\e[39m %s\n" "No ~/.bashrc, ~/.zshrc or ~/.zprofile found. Can't continue."
+    exit 1
+fi
+
 ask="Install the utilities script?"
 if continueYesNo "$ask"; then
     # Add the PATH to the bin folder
-    echo -e "PATH=\$PATH:$BIN_PATH" >> ~/.bashrc
+    echo -e "PATH=\$PATH:$BIN_PATH" >> $PROFILE_FILE
 
     # Create the docker network that will be used by the services and traefik
     docker network create dev-net-trfk
@@ -63,7 +65,7 @@ if continueYesNo "$ask"; then
     if continueYesNo "$ask"; then
         # Add the file of aliases if it exists
         if [ -f $ALIAS_HELPERS_FILE ]; then
-            echo -e "if [ -f $ALIAS_HELPERS_FILE ]; then \n\t. $ALIAS_HELPERS_FILE \nfi" >> ~/.bashrc
+            echo -e "if [ -f $ALIAS_HELPERS_FILE ]; then \n\t. $ALIAS_HELPERS_FILE \nfi" >> $PROFILE_FILE
         fi
     fi
     printf "\e[32m%s\e[39m\n" "success"
