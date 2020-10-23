@@ -2,7 +2,7 @@ version: "3.4"
 services:
   dev-kibana:
     # Apparently the version of kibana is dependent on the version of elasticsearch
-    image: kibana:7.9.2
+    image: kibana:7.9.3
     container_name: dev-kibana
     expose:
       - 5601
