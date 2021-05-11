@@ -98,6 +98,8 @@ $ econsul members
 ```
 ### epsql 
 ```bash
+# Full command to restore a database dump DB_BACKUP_FILE into a database DB_NAME
+$ cat DB_BACKUP_FILE | docker exec -e PGPASSWORD=postgres -i dev-postgres psql -h localhost -U postgres DB_NAME
 # Alias equivalent
 $ PGPASSWORD=postgres erun postgres psql -h localhost -U postgres
 
@@ -107,8 +109,8 @@ $ cat DB_BACKUP_FILE | epsql DB_NAME
 ```
 ### epgdump 
 ```bash
-# Alias equivalent
-$ docker exec -i dev-postgres pg_dump -h localhost -U postgres
+# Full command
+$ docker exec -i dev-postgres pg_dump -h localhost -U postgres DB_NAME > DB_BACKUP_FILE
 
 ### Usage example
 # To backup a local docker database DB_NAME into a DB_BACKUP_FILE
@@ -118,8 +120,10 @@ $ epgdump -h REMOTE_HOST -U REMOTE_USER DB_NAME > DB_BACKUP_FILE
 ```
 ### emongodump 
 ```bash
+# Full command
+$ docker exec -i dev-mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db DB_NAME > DB_BACKUP_FILE.gz
 # Alias equivalent
-$ erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db
+$ erun mongo mongodump -u "root" -p "root" --authenticationDatabase admin --archive --gzip --db DB_NAME > DB_BACKUP_FILE.gz
 
 ### Usage example
 # Create a dump file for a given database
@@ -127,8 +131,10 @@ $ emongodump DB_NAME > DB_BACKUP_FILE.gz
 ```
 ### emongorestore 
 ```bash
+# Full command
+$ cat  DB_BACKUP_FILE.gz | docker exec -i dev-mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive
 # Alias equivalent
-$ erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive
+$ cat  DB_BACKUP_FILE.gz | erun mongo mongorestore -u "root" -p "root" --authenticationDatabase admin --gzip --archive
 
 ### Usage example
 # To restore in the same database as the backup was made for
@@ -138,6 +144,8 @@ $ cat  DB_BACKUP_FILE.gz | emongorestore "OLD_DB_NAME.*" --nsTo "NEW_DB_NAME.*"
 ```
 ### emysqldump 
 ```bash
+# Full command
+$ docker exec -i dev-mysql mysqldump -uroot -proot DB_NAME > DB_BACKUP_FILE.sql
 # Alias equivalent
 $ erun mysql mysqldump -uroot -proot
 
@@ -147,6 +155,8 @@ $ emysqldump DB_NAME > DB_BACKUP_FILE.sql
 ```
 ### emysqlrestore 
 ```bash
+# Full command
+cat DB_BACKUP_FILE.sql | docker exec -i dev-mysql mysql -uroot -proot -hlocalhost DB_NAME
 # Alias equivalent
 $ erun mysql mysql -uroot -proot
 
