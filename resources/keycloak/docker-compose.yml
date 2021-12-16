@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   dev-keycloak:
-    image: jboss/keycloak:11.0.2
+    image: jboss/keycloak:15.1.0
     container_name: dev-keycloak
     expose:
       - 8080
