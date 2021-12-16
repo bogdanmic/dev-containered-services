@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   dev-openzipkin:
-    image: openzipkin/zipkin:2.22.0
+    image: openzipkin/zipkin:2.23.14
     container_name: dev-openzipkin
     expose:
       - 9411
@@ -24,7 +24,7 @@ services:
         max-file: "5"
 # # If we use storage then we will need to run also the openzipkin/zipkin-dependencies container on a scheduler to build the dependency graph data
 #   dev-openzipkin-dependencies:
-#     image: openzipkin/zipkin-dependencies:2.5.0
+#     image: openzipkin/zipkin-dependencies:2.6.4
 #     container_name: dev-openzipkin-dependencies
 #     environment:
 #       STORAGE_TYPE: elasticsearch

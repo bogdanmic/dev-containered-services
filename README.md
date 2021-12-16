@@ -49,17 +49,17 @@ If you want to start a service, all you need to do is ```drun SERVICE_NAME``` wh
 
 Service Name | Version | Credentials(*user:password*) | UI | Alias
 --- | --- | --- | --- | ---
-[traefik](https://containo.us/traefik/) | 2.3.2 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik```
-[consul](https://www.consul.io/) | 1.8.4 | - | [http://localhost:8500](http://localhost:8500) | ```$ dconsul```
-[postgres](https://www.postgresql.org/) | 13.0 | postgres:postgres | - | ```$ dpostgres```
-[mongo](https://www.mongodb.com/) | 4.4.1 | root:root | - | ```$ dmongo```
-[rabbit](https://www.rabbitmq.com/) | 3.8.9 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
-[mysql](https://www.mysql.com/) | 8.0.22 | root:root | - | ```$ dmysql```
-[elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.9.3 | - | - | ```$ delastic```
-[kibana](https://www.elastic.co/products/kibana) | 7.9.3 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
-[keycloak](https://www.keycloak.org/) | 11.0.2 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
-[openzipkin](https://zipkin.io/) | 2.22.0 | - | [http://zipkin.localhost](http://zipkin.localhost) | ```$ dzipkin```
-[jaeger](https://www.jaegertracing.io/) | 1.20.0 | - | [http://jaeger.localhost](http://jaeger.localhost) | ```$ djaeger```
+[traefik](https://containo.us/traefik/) | 2.5.5 | - | [http://traefik.localhost](http://traefik.localhost) | ```$ dtraefik```
+[consul](https://www.consul.io/) | 1.11.1 | - | [http://localhost:8500](http://localhost:8500) | ```$ dconsul```
+[postgres](https://www.postgresql.org/) | 14.1 | postgres:postgres | - | ```$ dpostgres```
+[mongo](https://www.mongodb.com/) | 5.0.5 | root:root | - | ```$ dmongo```
+[rabbit](https://www.rabbitmq.com/) | 3.9.11 | guest:guest | [http://rabbit.localhost](http://rabbit.localhost) | ```$ drabbit```
+[mysql](https://www.mysql.com/) | 8.0.27 | root:root | - | ```$ dmysql```
+[elasticsearch](https://www.elastic.co/products/elasticsearch/) | 7.16.1 | - | - | ```$ delastic```
+[kibana](https://www.elastic.co/products/kibana) | 7.16.1 | - | [http://kibana.localhost](http://kibana.localhost) | ```$ dkibana```
+[keycloak](https://www.keycloak.org/) | 15.1.0 | admin:admin | [http://keycloak.localhost](http://keycloak.localhost) | ```$ dkeycloak```
+[openzipkin](https://zipkin.io/) | 2.23.14 | - | [http://zipkin.localhost](http://zipkin.localhost) | ```$ dzipkin```
+[jaeger](https://www.jaegertracing.io/) | 1.29.0 | - | [http://jaeger.localhost](http://jaeger.localhost) | ```$ djaeger```
 [mailhog](https://github.com/mailhog/MailHog) | 1.0.1 | - | [http://mailhog.localhost](http://mailhog.localhost) | ```$ dmail```
 
 When these services are started, the docker container that gets started bears the
